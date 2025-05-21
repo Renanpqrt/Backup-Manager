@@ -380,7 +380,7 @@ def coletar_dados(frame_atual, janela):
             'Nome': dado.nome,
             'Email': dado.email,
             'Último Backup': dado.ultimo_bkp,
-            # 'Segundo Backup': dado.segundo_backup if dado.segundo_backup else ''
+            'Segundo Backup': dado.segundo_backup if dado.segundo_backup else ''
         })
     
     return pd.DataFrame(dados)
