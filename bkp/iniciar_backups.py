@@ -58,7 +58,7 @@ def iniciar_backup(frame_atual, janela):
             entry.insert(0, 'Data inválida')    
 
     def aumentar_um_dia(entry, id):
-        entry.configure(fg_color='white')
+        entry.configure(fg_color='gray20')
         try:
             data_atual = datetime.strptime(entry.get(), "%d/%m/%Y")
             nova_data = data_atual + timedelta(days=1)
