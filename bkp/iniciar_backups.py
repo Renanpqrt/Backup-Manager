@@ -31,7 +31,7 @@ def iniciar_backup(frame_atual, janela):
         session.commit()
 
     def atualizar_data_ontem(e, id):
-        e.configure(fg_color='white')
+        e.configure(fg_color='gray20')
         ontem = (date.today() - timedelta(days=1)).strftime("%d/%m/%Y")
 
         e.delete(0, 'end')
