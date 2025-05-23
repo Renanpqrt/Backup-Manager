@@ -41,6 +41,23 @@ def iniciar_backup(frame_atual, janela):
         conta_db.ultimo_bkp = ontem
         session.commit()
 
+    def salvar_ultimobkp(e, id):
+        e.configure(fg_color='gray20')
+        valor = e.get()
+
+        conta_db = session.query(Conta_dados).get(id)
+        conta_db.ultimo_bkp = valor
+        session.commit()
+
+    def salvar_obs(e, id):
+        e.configure(fg_color='gray20')
+        valor = e.get()
+
+        conta_db = session.query(Conta_dados).get(id)
+        conta_db.obs = valor
+        session.commit()
+
+
     for i, conta in enumerate(session.query(Conta_dados).all()):
         label_nome = ctk.CTkLabel(frame_conta, text=conta.nome.capitalize(), text_color='white')
         label_nome.grid(row=i, column=0, padx=5, pady=5)
@@ -51,10 +68,12 @@ def iniciar_backup(frame_atual, janela):
         entry_ultimobkp = ctk.CTkEntry(frame_conta, width=100)
         entry_ultimobkp.insert(0, conta.ultimo_bkp)
         entry_ultimobkp.grid(row=i, column=2, padx=10, pady=5)
+        entry_ultimobkp.bind('<Return>', lambda event, e=entry_ultimobkp, id=conta.id: salvar_ultimobkp(e, id))
 
         entry_obs = ctk.CTkEntry(frame_conta, width=100)
         entry_obs.insert(0, conta.obs)
         entry_obs.grid(row=i, column=3, padx=10, pady=5)
+        entry_obs.bind('<Return>', lambda event, e=entry_obs, id=conta.id: salvar_obs(e, id))
 
         b_hoje = ctk.CTkButton(frame_conta, text='Hoje', width=80, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: atualizar_data_hoje(e, id))
         b_hoje.grid(row=i, column=4, padx=10, pady=5)

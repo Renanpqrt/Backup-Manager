@@ -74,6 +74,14 @@ def iniciar_backup(frame_atual, janela):
             entry.delete(0, 'end')
             entry.insert(0, 'Data inválida')
 
+    def salvar_ultimo_bkp(e, id):
+        e.configure(fg_color='gray20')
+        valor = e.get()
+
+        conta_db = session.query(Conta).get(id)
+        conta_db.ultimo_bkp = valor
+        session.commit()
+
     def salvar_segundo_backup(e, id):
         e.configure(fg_color='gray20')
         valor = e.get()
@@ -81,7 +89,6 @@ def iniciar_backup(frame_atual, janela):
         conta_db = session.query(Conta).get(id)
         conta_db.segundo_backup = valor
         session.commit()
-
 
     for i, conta in enumerate(session.query(Conta).all()):
         label_nome = ctk.CTkLabel(frame_conta, text=conta.nome.capitalize(), text_color='white')
@@ -93,6 +100,7 @@ def iniciar_backup(frame_atual, janela):
         entry_ultimobkp = ctk.CTkEntry(frame_conta, width=100)
         entry_ultimobkp.insert(0, conta.ultimo_bkp)
         entry_ultimobkp.grid(row=i, column=2, padx=10, pady=5)
+        entry_ultimobkp.bind('<Return>', lambda event, e=entry_ultimobkp, id=conta.id: salvar_ultimo_bkp(e, id))
         
         if len(conta.segundo_backup) > 0:
             entry_segundobkp = ctk.CTkEntry(frame_conta, width=100)
