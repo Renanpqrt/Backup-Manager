@@ -17,13 +17,13 @@ def abrir_login(janela, frame_atual):
     image_label = ctk.CTkLabel(frame_fundo, text='', image=fundo_img)
     image_label.place(relx=0.0, rely=0.0, relwidth=1, relheight=1)
     
-    titulo_login = ctk.CTkLabel(frame_fundo, text='Backup Manager', font=('Arial', 25), fg_color='#0A1F56', text_color='Cyan')
+    titulo_login = ctk.CTkLabel(frame_fundo, text='Backup Manager', font=('Arial', 25), fg_color='#0A1F56', text_color='#FFFFFF')
     titulo_login.place(relx=0.5, rely=0.0, anchor='n')
     
-    entry_user = ctk.CTkEntry(frame_fundo, placeholder_text='Usuário', fg_color='#0d1b2a', bg_color='#0A1F56', text_color='white')
+    entry_user = ctk.CTkEntry(frame_fundo, placeholder_text='Usuário', fg_color='#0d1b2a', text_color='white', border_color='#0d1b2a')
     entry_user.place(relx=0.5, rely=0.25, anchor='center')
 
-    entry_senha = ctk.CTkEntry(frame_fundo, placeholder_text='Senha', show="*", fg_color='#0d1b2a', bg_color='#0A1F56', text_color='white')
+    entry_senha = ctk.CTkEntry(frame_fundo, placeholder_text='Senha', show="*", fg_color='#0d1b2a', text_color='white', border_color='#0d1b2a')
     entry_senha.place(relx=0.5, rely=0.35, anchor='center')
 
     def verificar_login():
@@ -37,7 +37,7 @@ def abrir_login(janela, frame_atual):
         else:
            retorno = CTkMessagebox(icon='cancel', message='Usuário ou senha incorreto', title='Login incorreto')
 
-    botao = ctk.CTkButton(frame_fundo, text='Login', width=80, command=verificar_login, fg_color='#0d1b2a', bg_color='#0d1b2a', hover_color='#0d1b2a')
+    botao = ctk.CTkButton(frame_fundo, text='Login', width=80, command=verificar_login, fg_color='#0d1b2a', hover_color='#0d1b2a')
     botao.place(relx=0.5, rely=0.45, anchor='n')
 
     

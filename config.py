@@ -23,20 +23,20 @@ def abrir_config(janela, frame_atual):
     voltar_home = ctk.CTkButton(frame_atual, image=voltar_imag, width=80, fg_color='transparent', hover_color='#A9A9A9', text='', command=lambda: abrir_home(janela, frame_atual))
     voltar_home.place(relx=0.98, rely=0.025, anchor='ne')
 
-    b_criar_user = ctk.CTkButton(frame_atual, text='Criar usuários', text_color='#fffafa', width=90, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: criar_user(frame_atual))
-    b_criar_user.place(relx=0.01, rely=0.2)
+    b_criar_user = ctk.CTkButton(frame_atual, text='Criar usuários', text_color='#fffafa', width=100, fg_color="#3da003", hover_color='#5eff00', command=lambda: criar_user(frame_atual))
+    b_criar_user.place(relx=0.01, rely=0.4)
 
-    b_deletar_user = ctk.CTkButton(frame_atual, text='Deletar usuários', text_color='#fffafa', width=90, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: deletar_user(frame_atual))
-    b_deletar_user.place(relx=0.01, rely=0.3)
+    b_deletar_user = ctk.CTkButton(frame_atual, text='Deletar usuários', text_color='#fffafa', width=100, fg_color="#880303", hover_color="#e0392d", command=lambda: deletar_user(frame_atual))
+    b_deletar_user.place(relx=0.01, rely=0.5)
 
-    b_cadastrar_conta = ctk.CTkButton(frame_atual, text='Cadastrar conta', text_color='#fffafa', width=90, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: cadastrar_conta(frame_atual))
-    b_cadastrar_conta.place(relx=0.01, rely=0.4)
+    b_cadastrar_conta = ctk.CTkButton(frame_atual, text='Cadastrar conta', text_color='#fffafa', width=100, fg_color='#3da003', hover_color='#5eff00', command=lambda: cadastrar_conta(frame_atual))
+    b_cadastrar_conta.place(relx=0.01, rely=0.2)
 
-    b_deletar_conta = ctk.CTkButton(frame_atual, text='Deletar contas', text_color='#fffafa', width=90, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: deletar_conta(frame_atual))
-    b_deletar_conta.place(relx=0.01, rely=0.5)
+    b_deletar_conta = ctk.CTkButton(frame_atual, text='Deletar contas', text_color='#fffafa', width=100, fg_color='#880303', hover_color='#e0392d', command=lambda: deletar_conta(frame_atual))
+    b_deletar_conta.place(relx=0.01, rely=0.3)
 
-    b_cadastrar_dados = ctk.CTkButton(frame_atual, text='Cadastrar contas (Dados)', text_color='#fffafa', width=90, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: cadastrar_conta_dados(frame_atual))
-    b_cadastrar_dados.place(relx=0.01, rely=0.5)
+    b_cadastrar_dados = ctk.CTkButton(frame_atual, text='Cadastrar Dados', text_color='#fffafa', width=100, fg_color='#3da003', hover_color='#5eff00', command=lambda: cadastrar_conta_dados(frame_atual))
+    b_cadastrar_dados.place(relx=0.81, rely=0.2)
 
-    b_deletar_dados = ctk.CTkButton(frame_atual, text='deletar contas (Dados)', text_color='#fffafa', width=90, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: deletar_conta_dados(frame_atual))
-    b_deletar_dados.place(relx=0.01, rely=0.6)
+    b_deletar_dados = ctk.CTkButton(frame_atual, text='Deletar Dados', text_color='#fffafa', width=100, fg_color='#880303', hover_color='#e0392d', command=lambda: deletar_conta_dados(frame_atual))
+    b_deletar_dados.place(relx=0.82, rely=0.3)
