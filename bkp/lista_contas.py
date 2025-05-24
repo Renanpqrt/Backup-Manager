@@ -9,12 +9,6 @@ def abrir_backups(janela, frame_atual):
     limpar_tela(frame_atual)
     from home import abrir_home
     
-    fundo = Image.open(resource_path("imagens/fundo1.png"))
-    fundo = CTkImage(light_image=fundo, size=(550, 100))
-
-    image_label = ctk.CTkLabel(frame_atual, text='', image=fundo)
-    image_label.place(relx=0.0, rely=0.0, relwidth=1, relheight=0.2)
-
     titulo_backups = ctk.CTkLabel(frame_atual, text='Lista de Contas', font=('Helvetica', 24), text_color='white')
     titulo_backups.pack(anchor='n', pady=10, padx=0.5)
 
@@ -27,7 +21,7 @@ def abrir_backups(janela, frame_atual):
     iniciar = ctk.CTkButton(frame_atual, text='Iniciar Backups', fg_color='#0d1b2a', hover_color='#0d1b2a', width=80, command=lambda: iniciar_backup(frame_atual, janela))
     iniciar.place(relx=0.025, rely=0.02)
 
-    frame_contas = ctk.CTkScrollableFrame(frame_atual, width=520, height=425, fg_color='#111530')
+    frame_contas = ctk.CTkScrollableFrame(frame_atual, width=520, height=425, fg_color='#08254b')
     frame_contas.place(relx=0.5, rely=0.55, anchor='center')
 
     for i, conta in enumerate(session.query(Conta).all()):

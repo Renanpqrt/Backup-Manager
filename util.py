@@ -409,11 +409,35 @@ def exportar_para_excel(df, frame_atual, janela):
             df.to_excel(writer, index=False, sheet_name='Backup')
             planilha = writer.sheets['Backup']
 
+            
+            tamanhos_colunas = {
+                'Nome': 40,
+                'Email': 45,
+                'Último Backup': 35,
+                'Segundo Backup': 35
+            }
+
+            
+            for idx, col in enumerate(df.columns, 1):
+                col_letter = get_column_letter(idx)
+                largura = tamanhos_colunas.get(col, 20)
+                planilha.column_dimensions[col_letter].width = largura
+
+            
+            num_linhas = df.shape[0] + 1  
+            num_colunas = df.shape[1]
+
+            for row in range(1, num_linhas + 1):  
+                for col in range(1, num_colunas + 1):
+                    celula = planilha.cell(row=row, column=col)
+                    celula.border = borda_preta
+
             col_index = df.columns.get_loc("Último Backup") + 1
 
             hoje = datetime.today().date()
             ontem = hoje - timedelta(days=1)
 
+            
             for i, data_str in enumerate(df['Último Backup'], start=2):
                 try:
                     data_backup = datetime.strptime(data_str, '%d/%m/%Y').date()
@@ -430,13 +454,11 @@ def exportar_para_excel(df, frame_atual, janela):
                 except Exception:
                     cor = 'FFFFFFFF'  
 
-                celula = f"{get_column_letter(col_index)}{i}"
-                fill = PatternFill(start_color=cor, end_color=cor, fill_type='solid')
-                planilha[celula].fill = fill
-
                 celula = planilha.cell(row=i, column=col_index)
-                celula.fill = PatternFill(start_color=cor, end_color=cor, fill_type='solid')
+                fill = PatternFill(start_color=cor, end_color=cor, fill_type='solid')
+                celula.fill = fill
                 celula.border = borda_preta
+
 
 def b_exportar(frame_atual, janela):
     df = coletar_dados(frame_atual, janela)

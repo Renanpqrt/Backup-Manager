@@ -8,7 +8,7 @@ from functools import partial
 def iniciar_backup(frame_atual, janela):
     bkp = ctk.CTkToplevel()
     bkp.geometry('1000x900')
-    bkp.configure(fg_color='#111530')
+    bkp.configure(fg_color='#08254b')
     bkp.wm_attributes('-topmost', 1)
     bkp.title('Backups (Em andamento)')
     
@@ -18,7 +18,7 @@ def iniciar_backup(frame_atual, janela):
     export = ctk.CTkButton(bkp, text='Exportar dados', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: b_exportar(frame_atual, janela))
     export.place(relx=0.1, rely=0.05, anchor='center')
 
-    frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#111530')
+    frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#08254b')
     frame_conta.place(relx=0.5, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
 
     def atualizar_data_hoje(e, id):
