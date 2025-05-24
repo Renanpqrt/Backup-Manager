@@ -8,19 +8,19 @@ def abrir_config(janela, frame_atual):
     from home import abrir_home
     limpar_tela(frame_atual)
     
-    fundo = Image.open(resource_path("imagens/fundo1.png"))
-    fundo = CTkImage(light_image=fundo, size=(600, 100))
+    fundo = Image.open(resource_path("imagens/config.png"))
+    fundo = CTkImage(light_image=fundo, size=(550, 500))
 
     image_label = ctk.CTkLabel(frame_atual, text='', image=fundo)
-    image_label.place(relx=0.0, rely=0.0, relwidth=1, relheight=0.2)
+    image_label.place(relx=0.0, rely=0.0, relwidth=1, relheight=1)
 
-    titulo_config = ctk.CTkLabel(frame_atual, text='Configurações', font=('Helvetica', 24), text_color='white')
+    titulo_config = ctk.CTkLabel(frame_atual, text='Configurações', font=('Helvetica', 24), text_color='white', fg_color='#08254b')
     titulo_config.pack(anchor='n', pady=10, padx=0.5)
 
     voltar_imag = Image.open(resource_path("imagens/voltar.png"))
     voltar_imag = CTkImage(light_image=voltar_imag, size=(30, 30))
 
-    voltar_home = ctk.CTkButton(frame_atual, image=voltar_imag, width=80, fg_color='transparent', hover_color='#A9A9A9', text='', command=lambda: abrir_home(janela, frame_atual))
+    voltar_home = ctk.CTkButton(frame_atual, image=voltar_imag, width=80, fg_color='#08254b', hover_color='#A9A9A9', text='', command=lambda: abrir_home(janela, frame_atual), bg_color='#08254b')
     voltar_home.place(relx=0.98, rely=0.025, anchor='ne')
 
     b_criar_user = ctk.CTkButton(frame_atual, text='Criar usuários', text_color='#fffafa', width=100, fg_color="#3da003", hover_color='#5eff00', command=lambda: criar_user(frame_atual))

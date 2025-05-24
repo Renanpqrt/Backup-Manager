@@ -9,7 +9,8 @@ from bkp.contas_dados import backup_dados
 def abrir_home(janela, frame_atual):
     from login import abrir_login
     limpar_tela(frame_atual)
-    
+    janela.configure(fg_color='#08254b')
+
     fundo = Image.open(resource_path("imagens/home.png"))
     fundo = CTkImage(light_image=fundo, size=(550, 500))
 
@@ -31,8 +32,11 @@ def abrir_home(janela, frame_atual):
     logoff = ctk.CTkButton(frame_atual, image=sair_img, text='', width=60, fg_color='#08254b', hover_color='#A9A9A9', command=lambda: abrir_login(janela, frame_atual), bg_color='#08254b')
     logoff.place(relx=0.025, rely=0.02)
 
-    fzr_bkp = ctk.CTkButton(frame_atual, text='Backups', fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: abrir_backups(janela, frame_atual), width=120)
+    fzr_bkp = ctk.CTkButton(frame_atual, text='Backups', fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: abrir_backups(janela, frame_atual), width=120,
+                             height=32, corner_radius=5, bg_color='#08254b')
     fzr_bkp.place(relx=0.5, rely=0.3, anchor='n')
 
-    fzr_bkp = ctk.CTkButton(frame_atual, text='Contas De Dados', fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: backup_dados(janela, frame_atual), width=120)
-    fzr_bkp.place(relx=0.5, rely=0.4, anchor='n')
+    fzr_bkp_dados = ctk.CTkButton(frame_atual, text='Contas De Dados', fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: backup_dados(janela, frame_atual), width=120, 
+                                  height=30, corner_radius=5, bg_color='#08254b')
+    fzr_bkp_dados.place(relx=0.5, rely=0.4, anchor='n')
+
