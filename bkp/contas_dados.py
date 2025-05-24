@@ -10,7 +10,7 @@ def backup_dados(janela, frame_atual):
     limpar_tela(frame_atual)
 
     fundo = Image.open(resource_path("imagens/fundo1.png"))
-    fundo = CTkImage(light_image=fundo, size=(600, 100))
+    fundo = CTkImage(light_image=fundo, size=(550, 100))
 
     image_label = ctk.CTkLabel(frame_atual, text='', image=fundo)
     image_label.place(relx=0.0, rely=0.0, relwidth=1, relheight=0.2)
@@ -27,7 +27,7 @@ def backup_dados(janela, frame_atual):
     iniciar = ctk.CTkButton(frame_atual, text='Iniciar Backups', fg_color='#0d1b2a', hover_color='#0d1b2a', width=80, command=lambda: iniciar_backup(frame_atual, janela))
     iniciar.place(relx=0.025, rely=0.02)
 
-    frame_contas = ctk.CTkScrollableFrame(frame_atual, width=580, height=425, fg_color='#111530')
+    frame_contas = ctk.CTkScrollableFrame(frame_atual, width=520, height=425, fg_color='#111530')
     frame_contas.place(relx=0.5, rely=0.55, anchor='center')
 
     for i, conta in enumerate(session.query(Conta_dados).all()):

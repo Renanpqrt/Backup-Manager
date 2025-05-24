@@ -9,7 +9,7 @@ from customtkinter import CTkImage
 def abrir_login(janela, frame_atual):
     limpar_tela(frame_atual)
     janela.geometry('550x500')
-
+    
     frame_fundo = ctk.CTkFrame(frame_atual, width=600, height=500, fg_color="#ffffff")
     frame_fundo.place(relx=0.5, rely=0.5, anchor='center')
 
