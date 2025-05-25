@@ -6,11 +6,11 @@ from util import resource_path
 def inciar_app():
     app = ctk.CTk()
     app.title('Gerenciamento de Backups')
-    app.geometry('600x500')
+    app.geometry('550x500')
     app.resizable(False, False)
     app._set_appearance_mode('dark')
     app.iconbitmap(resource_path("imagens/BKP.ico"))
-
+    app.configure(fg_color="#08254b")
 
     frame_principal = ctk.CTkFrame(app, fg_color='#08254b')
     frame_principal.pack(fill="both", expand=True)
