@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from util import limpar_tela, criar_user, deletar_user, cadastrar_conta, deletar_conta, resource_path, cadastrar_conta_dados, deletar_conta_dados
+from util import limpar_tela, cadastrar_conta, deletar_conta, resource_path, cadastrar_conta_dados, deletar_conta_dados
 from PIL import Image
 from customtkinter import CTkImage
 

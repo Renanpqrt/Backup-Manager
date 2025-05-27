@@ -26,120 +26,6 @@ def limpar_tela(frame_atual):
     for widget in frame_atual.winfo_children():
         widget.destroy()
 
-def criar_user(frame_atual):
-    criar = ctk.CTkToplevel()
-    criar.wm_attributes('-topmost', 1)
-    criar.geometry("350x400")
-    criar.configure(fg_color="#6679F8")
-    criar.overrideredirect(True)
-
-    barra = ctk.CTkFrame(criar, height=30, fg_color='gray20')
-    barra.pack(fill='x')
-
-    x_imag = Image.open(resource_path('imagens/x.png'))
-    x_imag = CTkImage(light_image=x_imag, size=(30, 30))
-
-    b_voltar = ctk.CTkButton(barra, text='', image=x_imag, fg_color='transparent', hover_color='gray20', width=60, command=lambda: criar.destroy())
-    b_voltar.pack(side='right')
-
-    d_imag = Image.open(resource_path('imagens/detalhe.png'))
-    d_imag = CTkImage(light_image=d_imag, size=(30, 30))
-
-    b_fake = ctk.CTkButton(barra, image=d_imag, text='', fg_color='transparent', hover_color='gray20', width=60, state='disabled')
-    b_fake.pack(side='left')
-
-    titulo_criar = ctk.CTkLabel(criar, text='Criação de usuários', font=('Arial', 15), text_color='white')
-    titulo_criar.place(relx=0.5, rely=0.15, anchor='n')
-
-    entry_user = ctk.CTkEntry(criar, placeholder_text='Digite o usuário')
-    entry_user.place(relx=0.5, rely=0.3, anchor='n')
-
-    entry_senha = ctk.CTkEntry(criar, placeholder_text='Digite a senha', show='*')
-    entry_senha.place(relx=0.5, rely=0.45, anchor='n')
-
-    def salvar(frame_atual):
-        usuario = entry_user.get().lower()
-        senha = entry_senha.get().lower()
-        usuario_banco = session.query(User).filter_by(nome_user=usuario).first()
-
-        if len(usuario) == 0 or len(senha) == 0:
-            retorno = CTkMessagebox(icon='cancel', message='Preencha todos os campos', title='Criação de usuário (Erro)')
-            if retorno.get() == 'OK':
-                criar.destroy()
-        else:
-            if usuario_banco:
-                retorno = CTkMessagebox(icon='cancel', message='Nome de usuário ja existente!', title='Criação de usuário (Erro)')
-                if retorno.get() == "OK":
-                    criar.destroy()
-            else:
-                new_user = User(nome_user=usuario, senha_user=senha)
-                session.add(new_user)
-                session.commit()
-                retorno = CTkMessagebox(icon='check', message='Usuário criado com sucesso!', title='Criação de usuário (Sucesso)')
-                if retorno.get() == "OK":
-                    criar.destroy()
-
-    b_salvar = ctk.CTkButton(criar, text='Criar', fg_color='Green', hover='Green', width=80, command=lambda: salvar(frame_atual))
-    b_salvar.place(relx=0.5, rely=0.60, anchor='n')
-
-    text_barra = ctk.CTkLabel(barra, text='Cadastro de usuários', text_color='white')
-    text_barra.pack(side='left', padx=5, pady=0)
-
-def deletar_user(frame_atual):
-    deletar = ctk.CTkToplevel()
-    deletar.geometry('350x400')
-    deletar.wm_attributes('-topmost', 1)
-    deletar.overrideredirect(True)
-    deletar.configure(fg_color="#6679F8")
-
-    barra = ctk.CTkFrame(deletar, height=30, fg_color='gray20')
-    barra.pack(fill='x')
-
-    x_imag = Image.open(resource_path('imagens/x.png'))
-    x_imag = CTkImage(light_image=x_imag, size=(30, 30))
-
-    b_voltar = ctk.CTkButton(barra, text='', image=x_imag, fg_color='transparent', hover_color='gray20', width=60, command=lambda: deletar.destroy())
-    b_voltar.pack(side='right')
-
-    d_imag = Image.open(resource_path('imagens/detalhe.png'))
-    d_imag = CTkImage(light_image=d_imag, size=(30, 30))
-
-    b_fake = ctk.CTkButton(barra, image=d_imag, text='', fg_color='transparent', hover_color='gray20', width=60, state='disabled')
-    b_fake.pack(side='left')
-
-    titulo_del = ctk.CTkLabel(deletar, text='Deletar usuário do app', font=('Arial', 15), text_color='white')
-    titulo_del.place(relx=0.5, rely=0.15, anchor='n')
-
-    text_barra = ctk.CTkLabel(barra, text='Exclusão de usuários', text_color='white')
-    text_barra.pack(side='left', padx=5, pady=0)
-
-    entry_user = ctk.CTkEntry(deletar, placeholder_text='Digite o usuário')
-    entry_user.place(relx=0.5, rely=0.3, anchor='n')
-
-    senha_adm = ctk.CTkEntry(deletar, placeholder_text='Senha de admin', show='*')
-    senha_adm.place(relx=0.5, rely=0.40, anchor='n')
-
-    def delete(frame_atual):
-        usuario = entry_user.get().lower()
-        senha_admin = senha_adm.get().lower()
-        usuario_banco = session.query(User).filter_by(nome_user=usuario).first()
-
-        if senha_admin != "administrador123":
-            retorno = CTkMessagebox(icon='cancel', message='Senha de administrador incorreta!', title='Exclusão de usuario (Erro)')
-        else:
-            if usuario_banco:
-                session.delete(usuario_banco)
-                session.commit()
-                retorno = CTkMessagebox(icon='check', message='Usuario excluido com sucesso!', title='Exclusão de usuário (Sucesso)')
-                if retorno.get() == "OK":
-                    deletar.destroy()
-            else:
-                retorno = CTkMessagebox(icon='cancel', message='Usuário inexistente', title='Exclusão de usuário (Erro)')
-                if retorno.get() == "OK":
-                    deletar.destroy()
-
-    b_excluir = ctk.CTkButton(deletar, text='deletar', fg_color='Red', hover='Red', width=80, command=lambda: delete(frame_atual))
-    b_excluir.place(relx=0.5, rely=0.55, anchor='n')
 
 def cadastrar_conta(frame_atual):
     cadastro = ctk.CTkToplevel()
@@ -414,7 +300,7 @@ def exportar_para_excel(df, frame_atual, janela):
             tamanhos_colunas = {
                 'Nome': 40,
                 'Email': 45,
-                'Último Backup': 35,
+                'Ultimo Backup': 35,
                 'Segundo Backup': 35
             }
 
