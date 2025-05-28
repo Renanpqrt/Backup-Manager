@@ -39,7 +39,7 @@ def abrir_home(janela, frame_atual):
                                   height=30, corner_radius=5, bg_color='#08254b')
     fzr_bkp_dados.place(relx=0.5, rely=0.4, anchor='n')
 
-    cadastro_img = Image.open(resource_path("imagens/cadastro.png"))
+    cadastro_img = Image.open(resource_path("imagens/detalhe.png"))
     cadastro_img = CTkImage(light_image=cadastro_img, size=(40, 40))
 
     cadastro_b = ctk.CTkButton(frame_atual, image=cadastro_img, text='', width=60, fg_color='#08254b', hover_color="#A9A9A9", command=lambda: abrir_cadastros(janela, frame_atual), bg_color='#08254b')

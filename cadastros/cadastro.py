@@ -3,6 +3,7 @@ from util import limpar_tela, resource_path
 from PIL import Image
 from customtkinter import CTkImage
 from cadastros.users import abrir_user
+from cadastros.contas import abrir_cadastro_contas
 
 def abrir_cadastros(janela, frame_atual):
     from home import abrir_home
@@ -22,3 +23,9 @@ def abrir_cadastros(janela, frame_atual):
 
     users_b = ctk.CTkButton(frame_atual, image=users_imag, text='', width=60, fg_color='#08254b', hover_color="#A9A9A9", command=lambda: abrir_user(janela, frame_atual), bg_color='#08254b')
     users_b.place(relx=0.07, rely=0.07, anchor='center')
+
+    conta_imag = Image.open(resource_path("imagens/cadastro.png"))
+    conta_imag = CTkImage(light_image=conta_imag, size=(40, 40))
+
+    contas_b = ctk.CTkButton(frame_atual, image=conta_imag, text='', width=60, fg_color='#08254b', hover_color="#A9A9A9", command=lambda: abrir_cadastro_contas(janela, frame_atual), bg_color='#08254b')
+    contas_b.place(relx=0.07, rely=0.2, anchor='center')
