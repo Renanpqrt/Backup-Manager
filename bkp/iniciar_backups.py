@@ -10,6 +10,7 @@ def iniciar_backup(frame_atual, janela):
     bkp.geometry('1000x900')
     bkp.configure(fg_color='#08254b')
     bkp.wm_attributes('-topmost', 1)
+    bkp.after(100, lambda: bkp.wm_attributes('-topmost', 0))
     bkp.title('Backups (Em andamento)')
     
     texto = ctk.CTkLabel(bkp, text='Iniciando Backups', text_color='white', font=('Arial', 25))
