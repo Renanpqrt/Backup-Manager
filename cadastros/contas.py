@@ -139,6 +139,11 @@ def abrir_cadastro_contas(janela, frame_atual):
                 session.add(new_conta)
                 session.commit()
                 retorno = CTkMessagebox(icon='check', message='Conta cadastrada com sucesso!', title='Criação de conta (Dados) (Sucesso)')
+
+                entry_nome.delete(0, 'end')
+                entry_email.delete(0, 'end')
+                entry_ultimobkp.delete(0, 'end')
+                entry_obs.delete(0, 'end')
                 
         b_salvar = ctk.CTkButton(tabela.tab('Contas de dados'), text='Cadastrar', fg_color='Green', hover='Green', width=80, command=lambda: salvar_dados(frame_atual))
         b_salvar.place(relx=0.5, rely=0.67, anchor='center')
