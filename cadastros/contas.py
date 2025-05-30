@@ -18,7 +18,19 @@ def abrir_cadastro_contas(janela, frame_atual):
     voltar_cadastros = ctk.CTkButton(frame_atual, image=voltar_imag, width=80, fg_color='#08254b', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastros(janela, frame_atual), bg_color='#08254b')
     voltar_cadastros.place(relx=0.98, rely=0.025, anchor='ne')
 
-    tabela = ctk.CTkTabview(master=frame_atual, width=550, height=350, fg_color="#08254b", segmented_button_fg_color="#08254b",
+    criar_img = Image.open(resource_path("imagens/adicionar.png"))
+    criar_img = CTkImage(light_image=criar_img, size=(35, 35))
+
+    criar_u = ctk.CTkButton(frame_atual, image=criar_img, text='', fg_color='#08254b', hover_color='#A9A9A9', command=lambda: cadastrar_conta(frame_atual), width=60)
+    criar_u.place(relx=0.06, rely=0.045, anchor='center')
+
+    excl_img = Image.open(resource_path("imagens/excluir.png"))
+    excl_img = CTkImage(light_image=excl_img, size=(35, 35))
+
+    deletar_u = ctk.CTkButton(frame_atual, image=excl_img, text='', fg_color='#08254b', hover_color='#A9A9A9', command=lambda: (frame_atual), width=60)
+    deletar_u.place(relx=0.155, rely=0.045, anchor='center')
+
+    tabela = ctk.CTkTabview(master=frame_atual, width=550, height=335, fg_color="#08254b", segmented_button_fg_color="#08254b",
     segmented_button_selected_color="#011125", segmented_button_selected_hover_color="#011125", segmented_button_unselected_color="gray20", segmented_button_unselected_hover_color="gray20")
     
     tabela.place(relx=0.5, rely=0.5, anchor='center')
@@ -30,11 +42,103 @@ def abrir_cadastro_contas(janela, frame_atual):
     aba_contas = tabela.tab("Contas")
     aba_contas_dados = tabela.tab("Contas de dados")
 
-    frame_contas = ctk.CTkScrollableFrame(aba_contas, width=550, height=350, fg_color='#08254b')
+    frame_contas = ctk.CTkScrollableFrame(aba_contas, width=525, height=335, fg_color='#08254b')
     frame_contas.pack(padx=0, pady=0, fill="both", expand=True)
+
+    frame_dados = ctk.CTkScrollableFrame(aba_contas_dados, width=525, height=335, fg_color='#08254b')
+    frame_dados.pack(padx=0, pady=0, fill="both", expand=True)
 
     for i, conta in enumerate(session.query(Conta).all()):
         label_c = ctk.CTkLabel(frame_contas, text=conta.nome.capitalize(), text_color='white')
         label_c.grid(row=i, column=0, padx=10, pady=5)
 
-   
+    for i, conta in enumerate(session.query(Conta_dados).all()):
+        label_c = ctk.CTkLabel(frame_dados, text=conta.nome.capitalize(), text_color='white')
+        label_c.grid(row=i, column=0, padx=10, pady=5)
+    
+    
+    def cadastrar_conta(frame_atual):
+        limpar_tela(frame_atual)
+
+        titulo_cadastro = ctk.CTkLabel(frame_atual, text='Criação de contas', font=('Arial', 20, 'bold'), text_color='white')
+        titulo_cadastro.place(relx=0.5, rely=0.04, anchor='center')
+
+        tabela = ctk.CTkTabview(master=frame_atual, width=550, height=400, fg_color="#08254b", segmented_button_fg_color="#08254b",
+    segmented_button_selected_color="#011125", segmented_button_selected_hover_color="#011125", segmented_button_unselected_color="gray20", segmented_button_unselected_hover_color="gray20")
+    
+        tabela.place(relx=0.5, rely=0.5, anchor='center')
+
+        tabela.add("Contas")  
+        tabela.add("Contas de dados")
+        tabela.set("Contas")
+
+        voltar_imag = Image.open(resource_path("imagens/voltar.png"))
+        voltar_imag = CTkImage(light_image=voltar_imag, size=(30, 30))
+
+        voltar_cadastros = ctk.CTkButton(frame_atual, image=voltar_imag, width=80, fg_color='#08254b', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastro_contas(janela, frame_atual), bg_color='#08254b')
+        voltar_cadastros.place(relx=0.98, rely=0.025, anchor='ne')
+
+        # Cadastro de contas
+        entry_nome = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite o nome')
+        entry_nome.place(relx=0.5, rely=0.1, anchor='center')
+
+        entry_email = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite o email')
+        entry_email.place(relx=0.5, rely=0.23, anchor='center')
+
+        entry_ultimobkp = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Data do ultimo BKP')
+        entry_ultimobkp.place(relx=0.5, rely=0.37, anchor='center')
+
+        entry_segundobkp = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite segundo BKP')
+        entry_segundobkp.place(relx=0.5, rely=0.52, anchor='center')
+
+        def salvar(frame_atual):
+            nome = entry_nome.get().lower()
+            email = entry_email.get().lower()
+            ultimo_bkp = entry_ultimobkp.get().lower()
+            segundo_bkp = entry_segundobkp.get().lower()
+
+            if len(nome) == 0 or len(email) == 0:
+                retorno = CTkMessagebox(icon='cancel', message='Preencha todos os campos obrigatórios!', title='Cadastro de conta (Erro)')
+            else:
+                new_conta = Conta(nome=nome, email=email, ultimo_bkp=ultimo_bkp, segundo_backup=segundo_bkp)
+                session.add(new_conta)
+                session.commit()
+                retorno = CTkMessagebox(icon='check', message='Conta cadastrada com sucesso!', title='Criação de conta (Sucesso)')
+
+                entry_nome.delete(0, 'end')
+                entry_email.delete(0, 'end')
+                entry_ultimobkp.delete(0, 'end')
+                entry_segundobkp.delete(0, 'end')
+            
+        b_salvar = ctk.CTkButton(tabela.tab('Contas'), text='Cadastrar', fg_color='Green', hover='Green', width=80, command=lambda: salvar(frame_atual))
+        b_salvar.place(relx=0.5, rely=0.67, anchor='center')
+
+        # Cadastro de contas de dados
+        entry_nome = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite o nome')
+        entry_nome.place(relx=0.5, rely=0.1, anchor='center')
+
+        entry_email = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite o email')
+        entry_email.place(relx=0.5, rely=0.23, anchor='center')
+
+        entry_ultimobkp = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Data do ultimo BKP')
+        entry_ultimobkp.place(relx=0.5, rely=0.37, anchor='center')
+
+        entry_obs = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite a observação')
+        entry_obs.place(relx=0.5, rely=0.52, anchor='center')
+        
+        def salvar_dados(frame_atual):
+            nome = entry_nome.get().lower()
+            email = entry_email.get().lower()
+            ultimo_bkp = entry_ultimobkp.get().lower()
+            obs = entry_obs.get().lower()
+
+            if len(nome) == 0 or len(email) == 0:
+                retorno = CTkMessagebox(icon='cancel', message='Preencha todos os campos obrigatórios!', title='Cadastro de conta (Erro)')
+            else:
+                new_conta = Conta_dados(nome=nome, email=email, ultimo_bkp=ultimo_bkp, obs=obs)
+                session.add(new_conta)
+                session.commit()
+                retorno = CTkMessagebox(icon='check', message='Conta cadastrada com sucesso!', title='Criação de conta (Dados) (Sucesso)')
+                
+        b_salvar = ctk.CTkButton(tabela.tab('Contas de dados'), text='Cadastrar', fg_color='Green', hover='Green', width=80, command=lambda: salvar_dados(frame_atual))
+        b_salvar.place(relx=0.5, rely=0.67, anchor='center')

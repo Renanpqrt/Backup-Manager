@@ -32,7 +32,7 @@ def abrir_user(janela, frame_atual):
     excl_img = CTkImage(light_image=excl_img, size=(35, 35))
 
     deletar_u = ctk.CTkButton(frame_atual, image=excl_img, text='', fg_color='#08254b', hover_color='#A9A9A9', command=lambda: deletar_user(frame_atual), width=60)
-    deletar_u.place(relx=0.06, rely=0.15, anchor='center')
+    deletar_u.place(relx=0.155, rely=0.045, anchor='center')
 
 
     for i, conta in enumerate(session.query(User).all()):

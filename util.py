@@ -26,66 +26,6 @@ def limpar_tela(frame_atual):
     for widget in frame_atual.winfo_children():
         widget.destroy()
 
-
-def cadastrar_conta(frame_atual):
-    cadastro = ctk.CTkToplevel()
-    cadastro.geometry('350x400')
-    cadastro.wm_attributes('-topmost', 1)
-    cadastro.overrideredirect(True)
-    cadastro.configure(fg_color="#6679F8")
-
-    barra = ctk.CTkFrame(cadastro, height=30, fg_color='gray20')
-    barra.pack(fill='x')
-
-    x_imag = Image.open(resource_path('imagens/x.png'))
-    x_imag = CTkImage(light_image=x_imag, size=(30, 30))
-
-    b_voltar = ctk.CTkButton(barra, text='', image=x_imag, fg_color='transparent', hover_color='gray20', width=60, command=lambda: cadastro.destroy())
-    b_voltar.pack(side='right')
-
-    d_imag = Image.open(resource_path('imagens/detalhe.png'))
-    d_imag = CTkImage(light_image=d_imag, size=(30, 30))
-
-    b_fake = ctk.CTkButton(barra, image=d_imag, text='', fg_color='transparent', hover_color='gray20', width=60, state='disabled')
-    b_fake.pack(side='left')
-
-    titulo_cadastro = ctk.CTkLabel(cadastro, text='Criação de contas', font=('Arial', 15), text_color='white')
-    titulo_cadastro.place(relx=0.5, rely=0.15, anchor='n')
-
-    entry_nome = ctk.CTkEntry(cadastro, placeholder_text='Digite o nome')
-    entry_nome.place(relx=0.5, rely=0.3, anchor='n')
-
-    entry_email = ctk.CTkEntry(cadastro, placeholder_text='Digite o email')
-    entry_email.place(relx=0.5, rely=0.4, anchor='n')
-
-    entry_ultimobkp = ctk.CTkEntry(cadastro, placeholder_text='Data do ultimo BKP')
-    entry_ultimobkp.place(relx=0.5, rely=0.5, anchor='n')
-
-    entry_segundobkp = ctk.CTkEntry(cadastro, placeholder_text='Digite o segundo BKP')
-    entry_segundobkp.place(relx=0.5, rely=0.6, anchor='n')
-
-    def salvar(frame_atual):
-        nome = entry_nome.get().lower()
-        email = entry_email.get().lower()
-        ultimo_bkp = entry_ultimobkp.get().lower()
-        segundo_bkp = entry_segundobkp.get().lower()
-
-        if len(nome) == 0 or len(email) == 0:
-            retorno = CTkMessagebox(icon='cancel', message='Preencha todos os campos obrigatórios!', title='Cadastro de conta (Erro)')
-        else:
-            new_conta = Conta(nome=nome, email=email, ultimo_bkp=ultimo_bkp, segundo_backup=segundo_bkp)
-            session.add(new_conta)
-            session.commit()
-            retorno = CTkMessagebox(icon='check', message='Conta cadastrada com sucesso!', title='Criação de conta (Sucesso)')
-            if retorno.get() == "OK":
-                cadastro.destroy()
-    
-    b_salvar = ctk.CTkButton(cadastro, text='Cadastrar', fg_color='Green', hover='Green', width=80, command=lambda: salvar(frame_atual))
-    b_salvar.place(relx=0.5, rely=0.7, anchor='n')
-
-    text_barra = ctk.CTkLabel(barra, text='Cadastro de contas', text_color='white')
-    text_barra.pack(side='left', padx=5, pady=0)
-
 def deletar_conta(frame_atual):
     deletar = ctk.CTkToplevel()
     deletar.geometry('350x400')
@@ -141,65 +81,6 @@ def deletar_conta(frame_atual):
 
     b_excluir = ctk.CTkButton(deletar, text='deletar', fg_color='Red', hover='Red', width=80, command=lambda: delete(frame_atual))
     b_excluir.place(relx=0.5, rely=0.55, anchor='n')
-
-def cadastrar_conta_dados(frame_atual):
-    cadastro = ctk.CTkToplevel()
-    cadastro.geometry('350x400')
-    cadastro.wm_attributes('-topmost', 1)
-    cadastro.overrideredirect(True)
-    cadastro.configure(fg_color="#6679F8")
-
-    barra = ctk.CTkFrame(cadastro, height=30, fg_color='gray20')
-    barra.pack(fill='x')
-
-    x_imag = Image.open(resource_path('imagens/x.png'))
-    x_imag = CTkImage(light_image=x_imag, size=(30, 30))
-
-    b_voltar = ctk.CTkButton(barra, text='', image=x_imag, fg_color='transparent', hover_color='gray20', width=60, command=lambda: cadastro.destroy())
-    b_voltar.pack(side='right')
-
-    d_imag = Image.open(resource_path('imagens/detalhe.png'))
-    d_imag = CTkImage(light_image=d_imag, size=(30, 30))
-
-    b_fake = ctk.CTkButton(barra, image=d_imag, text='', fg_color='transparent', hover_color='gray20', width=60, state='disabled')
-    b_fake.pack(side='left')
-
-    titulo_cadastro = ctk.CTkLabel(cadastro, text='Criação de contas (dados)', font=('Arial', 15), text_color='white')
-    titulo_cadastro.place(relx=0.5, rely=0.15, anchor='n')
-
-    entry_nome = ctk.CTkEntry(cadastro, placeholder_text='Digite o nome')
-    entry_nome.place(relx=0.5, rely=0.3, anchor='n')
-
-    entry_email = ctk.CTkEntry(cadastro, placeholder_text='Digite o email')
-    entry_email.place(relx=0.5, rely=0.4, anchor='n')
-
-    entry_ultimobkp = ctk.CTkEntry(cadastro, placeholder_text='Data do ultimo BKP')
-    entry_ultimobkp.place(relx=0.5, rely=0.5, anchor='n')
-
-    entry_obs = ctk.CTkEntry(cadastro, placeholder_text='observações')
-    entry_obs.place(relx=0.5, rely=0.6, anchor='n')
-
-    def salvar(frame_atual):
-        nome = entry_nome.get().lower()
-        email = entry_email.get().lower()
-        ultimo_bkp = entry_ultimobkp.get().lower()
-        obs = entry_obs.get().lower()
-
-        if len(nome) == 0 or len(email) == 0:
-            retorno = CTkMessagebox(icon='cancel', message='Preencha todos os campos obrigatórios!', title='Cadastro de conta (Erro)')
-        else:
-            new_conta = Conta_dados(nome=nome, email=email, ultimo_bkp=ultimo_bkp, obs=obs)
-            session.add(new_conta)
-            session.commit()
-            retorno = CTkMessagebox(icon='check', message='Conta cadastrada com sucesso!', title='Criação de conta (Dados) (Sucesso)')
-            if retorno.get() == "OK":
-                cadastro.destroy()
-    
-    b_salvar = ctk.CTkButton(cadastro, text='Cadastrar', fg_color='Green', hover='Green', width=80, command=lambda: salvar(frame_atual))
-    b_salvar.place(relx=0.5, rely=0.7, anchor='n')
-
-    text_barra = ctk.CTkLabel(barra, text='Cadastro de contas (dados)', text_color='white')
-    text_barra.pack(side='left', padx=5, pady=0)
 
 def deletar_conta_dados(frame_atual):
     deletar = ctk.CTkToplevel()
