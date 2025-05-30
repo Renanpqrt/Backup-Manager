@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from util import limpar_tela, deletar_conta, resource_path, cadastrar_conta_dados, deletar_conta_dados
+from util import limpar_tela, resource_path
 from PIL import Image
 from customtkinter import CTkImage
 
@@ -16,12 +16,3 @@ def abrir_config(janela, frame_atual):
 
     voltar_home = ctk.CTkButton(frame_atual, image=voltar_imag, width=80, fg_color='#08254b', hover_color='#A9A9A9', text='', command=lambda: abrir_home(janela, frame_atual), bg_color='#08254b')
     voltar_home.place(relx=0.98, rely=0.025, anchor='ne')
-
-    b_deletar_conta = ctk.CTkButton(frame_atual, text='Deletar contas', text_color='#fffafa', width=100, fg_color='#880303', hover_color='#e0392d', command=lambda: deletar_conta(frame_atual))
-    b_deletar_conta.place(relx=0.01, rely=0.3)
-
-    b_cadastrar_dados = ctk.CTkButton(frame_atual, text='Cadastrar Dados', text_color='#fffafa', width=100, fg_color='#3da003', hover_color='#5eff00', command=lambda: cadastrar_conta_dados(frame_atual))
-    b_cadastrar_dados.place(relx=0.79, rely=0.2)
-
-    b_deletar_dados = ctk.CTkButton(frame_atual, text='Deletar Dados', text_color='#fffafa', width=100, fg_color='#880303', hover_color='#e0392d', command=lambda: deletar_conta_dados(frame_atual))
-    b_deletar_dados.place(relx=0.79, rely=0.3)
