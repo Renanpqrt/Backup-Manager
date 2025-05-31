@@ -115,12 +115,19 @@ def iniciar_backup(frame_atual, janela):
         conta_db.cor_ultimo_backup = 'red'
         session.commit()
 
+    def copiar_para_clipboard(event, label):
+        conteudo = label.cget('text')
+        label.clipboard_clear()
+        label.clipboard_append(conteudo)
+        label.update()
+
     for i, conta in enumerate(session.query(Conta).all()):
         label_nome = ctk.CTkLabel(frame_conta, text=conta.nome.capitalize(), text_color='white')
         label_nome.grid(row=i, column=0, padx=5, pady=5)
 
         label_email = ctk.CTkLabel(frame_conta, text=conta.email, text_color='white')
         label_email.grid(row=i, column=1, padx=10, pady=5)
+        label_email.bind("<Button-1>", lambda event, lbl=label_email: copiar_para_clipboard(event, lbl))
 
         entry_ultimobkp = ctk.CTkEntry(frame_conta, width=100, text_color='black')
         entry_ultimobkp.insert(0, conta.ultimo_bkp)
