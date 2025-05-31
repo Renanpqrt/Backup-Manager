@@ -40,12 +40,14 @@ class Conta(Base):
     email = Column("email", String)
     ultimo_bkp = Column("ultimo_backup", String)
     segundo_backup = Column("segundo_backup", String)
+    cor_ultimo_backup = Column(String)
 
-    def __init__(self, nome, email, ultimo_bkp="00/00/00", segundo_backup="S/segundobkp"):
+    def __init__(self, nome, email, ultimo_bkp="00/00/00", segundo_backup="S/segundobkp", cor_ultimo_backup="gray20"):
         self.nome = nome
         self.email = email
         self.ultimo_bkp = ultimo_bkp
         self.segundo_backup = segundo_backup
+        self.cor_ultimo_backup = cor_ultimo_backup
 
 class User(Base):
     __tablename__ = "users"
@@ -66,12 +68,14 @@ class Conta_dados(Base):
     email = Column("email", String)
     ultimo_bkp = Column("ultimo_backup", String)
     obs = Column("obs", String)
+    cor_ultimo_backup = Column(String)
 
-    def __init__(self, nome, email, ultimo_bkp="00/00/00", obs="S/obs"):
+    def __init__(self, nome, email, ultimo_bkp="00/00/00", obs="S/obs", cor_ultimo_backup="gray20"):
         self.nome = nome
         self.email = email
         self.ultimo_bkp = ultimo_bkp
         self.obs = obs
+        self.cor_ultimo_backup = cor_ultimo_backup
 
 
 Base.metadata.create_all(bind=db)

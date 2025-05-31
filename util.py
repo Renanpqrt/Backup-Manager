@@ -26,117 +26,6 @@ def limpar_tela(frame_atual):
     for widget in frame_atual.winfo_children():
         widget.destroy()
 
-def deletar_conta(frame_atual):
-    deletar = ctk.CTkToplevel()
-    deletar.geometry('350x400')
-    deletar.wm_attributes('-topmost', 1)
-    deletar.overrideredirect(True)
-    deletar.configure(fg_color="#6679F8")
-
-    barra = ctk.CTkFrame(deletar, height=30, fg_color='gray20')
-    barra.pack(fill='x')
-
-    x_imag = Image.open(resource_path('imagens/x.png'))
-    x_imag = CTkImage(light_image=x_imag, size=(30, 30))
-
-    b_voltar = ctk.CTkButton(barra, text='', image=x_imag, fg_color='transparent', hover_color='gray20', width=60, command=lambda: deletar.destroy())
-    b_voltar.pack(side='right')
-
-    d_imag = Image.open(resource_path('imagens/detalhe.png'))
-    d_imag = CTkImage(light_image=d_imag, size=(30, 30))
-
-    b_fake = ctk.CTkButton(barra, image=d_imag, text='', fg_color='transparent', hover_color='gray20', width=60, state='disabled')
-    b_fake.pack(side='left')
-
-    titulo_del = ctk.CTkLabel(deletar, text='Deletar conta do app', font=('Arial', 15), text_color='white')
-    titulo_del.place(relx=0.5, rely=0.15, anchor='n')
-
-    text_barra = ctk.CTkLabel(barra, text='Exclusão de contas', text_color='white')
-    text_barra.pack(side='left', padx=5, pady=0)
-
-    entry_conta = ctk.CTkEntry(deletar, placeholder_text='Digite a conta')
-    entry_conta.place(relx=0.5, rely=0.3, anchor='n')
-
-    senha_adm = ctk.CTkEntry(deletar, placeholder_text='Senha de admin', show='*')
-    senha_adm.place(relx=0.5, rely=0.40, anchor='n')
-
-    def delete(frame_atual):
-        conta = entry_conta.get().lower()
-        senha_admin = senha_adm.get().lower()
-        conta_banco = session.query(Conta).filter_by(nome=conta).first()
-
-        if senha_admin != "administrador123":
-            retorno = CTkMessagebox(icon='cancel', message='Senha de administrador incorreta!', title='Exclusão de contas (Erro)')
-        else:
-            if conta_banco:
-                session.delete(conta_banco)
-                session.commit()
-                retorno = CTkMessagebox(icon='check', message='Conta excluida com sucesso!', title='Exclusão de contas (Sucesso)')
-                if retorno.get() == "OK":
-                    deletar.destroy()
-            else:
-                retorno = CTkMessagebox(icon='cancel', message='Conta inexistente', title='Exclusão de contas (Erro)')
-                if retorno.get() == "OK":
-                    deletar.destroy()
-
-    b_excluir = ctk.CTkButton(deletar, text='deletar', fg_color='Red', hover='Red', width=80, command=lambda: delete(frame_atual))
-    b_excluir.place(relx=0.5, rely=0.55, anchor='n')
-
-def deletar_conta_dados(frame_atual):
-    deletar = ctk.CTkToplevel()
-    deletar.geometry('350x400')
-    deletar.wm_attributes('-topmost', 1)
-    deletar.overrideredirect(True)
-    deletar.configure(fg_color="#6679F8")
-
-    barra = ctk.CTkFrame(deletar, height=30, fg_color='gray20')
-    barra.pack(fill='x')
-
-    x_imag = Image.open(resource_path('imagens/x.png'))
-    x_imag = CTkImage(light_image=x_imag, size=(30, 30))
-
-    b_voltar = ctk.CTkButton(barra, text='', image=x_imag, fg_color='transparent', hover_color='gray20', width=60, command=lambda: deletar.destroy())
-    b_voltar.pack(side='right')
-
-    d_imag = Image.open(resource_path('imagens/detalhe.png'))
-    d_imag = CTkImage(light_image=d_imag, size=(30, 30))
-
-    b_fake = ctk.CTkButton(barra, image=d_imag, text='', fg_color='transparent', hover_color='gray20', width=60, state='disabled')
-    b_fake.pack(side='left')
-
-    titulo_del = ctk.CTkLabel(deletar, text='Deletar conta de dados', font=('Arial', 15), text_color='white')
-    titulo_del.place(relx=0.5, rely=0.15, anchor='n')
-
-    text_barra = ctk.CTkLabel(barra, text='Exclusão de contas (Dados)', text_color='white')
-    text_barra.pack(side='left', padx=5, pady=0)
-
-    entry_conta = ctk.CTkEntry(deletar, placeholder_text='Digite a conta')
-    entry_conta.place(relx=0.5, rely=0.3, anchor='n')
-
-    senha_adm = ctk.CTkEntry(deletar, placeholder_text='Senha de admin', show='*')
-    senha_adm.place(relx=0.5, rely=0.40, anchor='n')
-
-    def delete(frame_atual):
-        conta = entry_conta.get().lower()
-        senha_admin = senha_adm.get().lower()
-        conta_banco = session.query(Conta_dados).filter_by(nome=conta).first()
-
-        if senha_admin != "administrador123":
-            retorno = CTkMessagebox(icon='cancel', message='Senha de administrador incorreta!', title='Exclusão de contas (Erro)')
-        else:
-            if conta_banco:
-                session.delete(conta_banco)
-                session.commit()
-                retorno = CTkMessagebox(icon='check', message='Conta excluida com sucesso!', title='Exclusão de contas (Sucesso)')
-                if retorno.get() == "OK":
-                    deletar.destroy()
-            else:
-                retorno = CTkMessagebox(icon='cancel', message='Conta inexistente', title='Exclusão de contas (Erro)')
-                if retorno.get() == "OK":
-                    deletar.destroy()
-
-    b_excluir = ctk.CTkButton(deletar, text='deletar', fg_color='Red', hover='Red', width=80, command=lambda: delete(frame_atual))
-    b_excluir.place(relx=0.5, rely=0.55, anchor='n')
 
 def coletar_dados(frame_atual, janela):
     contas = session.query(Conta).all()
@@ -147,8 +36,9 @@ def coletar_dados(frame_atual, janela):
         dados.append({
             'Nome': dado.nome,
             'Email': dado.email,
-            'Último Backup': dado.ultimo_bkp,
-            'Segundo Backup': dado.segundo_backup if dado.segundo_backup else ''
+            'Ultimo Backup': dado.ultimo_bkp,
+            'Segundo Backup': dado.segundo_backup if dado.segundo_backup else '',
+            'Cor': dado.cor_ultimo_backup
         })
     
     return pd.DataFrame(dados)
@@ -156,9 +46,9 @@ def coletar_dados(frame_atual, janela):
 
 def exportar_para_excel(df, frame_atual, janela):
     cores_status = {
-        'verde': 'FF008000',   
-        'amarelo': 'FFFFFF00', 
-        'vermelho': 'FFFF0000' 
+        'green': 'FF008000',
+        'yellow': 'FFFFFF00',
+        'red': 'FFFF0000'
     }
 
     borda_preta = Border(
@@ -174,10 +64,9 @@ def exportar_para_excel(df, frame_atual, janela):
 
     if caminho:
         with pd.ExcelWriter(caminho, engine='openpyxl') as writer:
-            df.to_excel(writer, index=False, sheet_name='Backup')
+            df.drop(columns=['Cor'], inplace=False).to_excel(writer, index=False, sheet_name='Backup')  # Não exporta coluna 'Cor'
             planilha = writer.sheets['Backup']
 
-            
             tamanhos_colunas = {
                 'Nome': 40,
                 'Email': 45,
@@ -185,45 +74,25 @@ def exportar_para_excel(df, frame_atual, janela):
                 'Segundo Backup': 35
             }
 
-            
-            for idx, col in enumerate(df.columns, 1):
+            for idx, col in enumerate(df.drop(columns=['Cor']).columns, 1):
                 col_letter = get_column_letter(idx)
                 largura = tamanhos_colunas.get(col, 20)
                 planilha.column_dimensions[col_letter].width = largura
 
-            
             num_linhas = df.shape[0] + 1  
-            num_colunas = df.shape[1]
+            num_colunas = df.shape[1] - 1  # menos a coluna 'Cor'
 
-            for row in range(1, num_linhas + 1):  
+            for row in range(1, num_linhas + 1):
                 for col in range(1, num_colunas + 1):
                     celula = planilha.cell(row=row, column=col)
                     celula.border = borda_preta
 
-            col_index = df.columns.get_loc("Último Backup") + 1
+            col_index = list(df.columns).index("Ultimo Backup") + 1
 
-            hoje = datetime.today().date()
-            ontem = hoje - timedelta(days=1)
-
-            
-            for i, data_str in enumerate(df['Último Backup'], start=2):
-                try:
-                    data_backup = datetime.strptime(data_str, '%d/%m/%Y').date()
-                    dias_atras = (hoje - data_backup).days
-
-                    if data_backup == hoje or data_backup == ontem:
-                        cor = cores_status['verde']
-                    elif 2 <= dias_atras <= 3:
-                        cor = cores_status['amarelo']
-                    elif dias_atras > 3:
-                        cor = cores_status['vermelho']
-                    else:
-                        cor = 'FFFFFFFF'  
-                except Exception:
-                    cor = 'FFFFFFFF'  
-
+            for i, cor_valor in enumerate(df['Cor'], start=2):  # começa da linha 2
+                cor_hex = cores_status.get(cor_valor, 'FFFFFFFF')  # branco se não tiver cor
                 celula = planilha.cell(row=i, column=col_index)
-                fill = PatternFill(start_color=cor, end_color=cor, fill_type='solid')
+                fill = PatternFill(start_color=cor_hex, end_color=cor_hex, fill_type='solid')
                 celula.fill = fill
                 celula.border = borda_preta
 
@@ -231,6 +100,7 @@ def exportar_para_excel(df, frame_atual, janela):
 def b_exportar(frame_atual, janela):
     df = coletar_dados(frame_atual, janela)
     exportar_para_excel(df, frame_atual, janela)
+
 
 def coletar_dados2(frame_atual, janela):
     contas = session.query(Conta_dados).all()
@@ -241,12 +111,54 @@ def coletar_dados2(frame_atual, janela):
         dados.append({
             'Nome': dado.nome,
             'Email': dado.email,
-            'Último Backup': dado.ultimo_bkp,
-            'OBS': dado.obs
+            'Ultimo Backup': dado.ultimo_bkp,
+            'OBS': dado.obs,
+            'cor': dado.cor_ultimo_backup
         })
     
     return pd.DataFrame(dados)
 
+
 def b_exportar2(frame_atual, janela):
     df = coletar_dados2(frame_atual, janela)
     exportar_para_excel(df, frame_atual, janela)
+
+def importar_ultima_alteracao(frame_atual):
+    # Abre o seletor de arquivos para escolher o Excel
+    filepath = filedialog.askopenfilename(
+        title="Selecione o arquivo Excel",
+        filetypes=[("Excel files", "*.xlsx *.xls")]
+    )
+
+    if not filepath:
+        CTkMessagebox(title="Importação cancelada", message="Nenhum arquivo foi selecionado.", icon="info")
+        return
+
+    try:
+        # Lê o Excel
+        df = pd.read_excel(filepath)
+
+        # Verifica se as colunas necessárias existem
+        if 'Nome' not in df.columns or 'Ultimo Backup' not in df.columns:
+            CTkMessagebox(title="Erro", message="O arquivo deve conter as colunas 'Nome' e 'Ultimo Backup'.", icon="cancel")
+            return
+
+        atualizados = 0
+
+        for index, row in df.iterrows():
+            nome = str(row['Nome']).strip().lower()
+            ultimo_bkp = str(row['Ultimo Backup']).strip()
+
+            conta = session.query(Conta).filter_by(nome=nome).first()
+
+            if conta:
+                conta.ultimo_bkp = ultimo_bkp
+                atualizados += 1
+
+        session.commit()
+        CTkMessagebox(title="Importação concluída", message=f"{atualizados} contas atualizadas com sucesso.", icon="check")
+
+    except Exception as e:
+        CTkMessagebox(title="Erro", message=f"Falha ao importar: {e}", icon="cancel")
+
+    

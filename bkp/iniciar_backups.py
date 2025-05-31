@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from dados.tabelas import Conta, session
 from datetime import date, timedelta, datetime
-from util import b_exportar, resource_path
+from util import b_exportar, resource_path, importar_ultima_alteracao
 from functools import partial
 
 
@@ -18,6 +18,9 @@ def iniciar_backup(frame_atual, janela):
 
     export = ctk.CTkButton(bkp, text='Exportar dados', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: b_exportar(frame_atual, janela))
     export.place(relx=0.1, rely=0.05, anchor='center')
+
+    importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: importar_ultima_alteracao(frame_atual))
+    importar.place(relx=0.75, rely=0.05)
 
     frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#08254b')
     frame_conta.place(relx=0.5, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
@@ -91,6 +94,27 @@ def iniciar_backup(frame_atual, janela):
         conta_db.segundo_backup = valor
         session.commit()
 
+    def verde(e, id):
+        e.configure(fg_color='green')
+
+        conta_db = session.query(Conta).get(id)
+        conta_db.cor_ultimo_backup = 'green'
+        session.commit()
+
+    def amarelo(e, id):
+        e.configure(fg_color='yellow')
+
+        conta_db = session.query(Conta).get(id)
+        conta_db.cor_ultimo_backup = 'yellow'
+        session.commit()
+
+    def vermelho(e, id):
+        e.configure(fg_color='red')
+
+        conta_db = session.query(Conta).get(id)
+        conta_db.cor_ultimo_backup = 'red'
+        session.commit()
+
     for i, conta in enumerate(session.query(Conta).all()):
         label_nome = ctk.CTkLabel(frame_conta, text=conta.nome.capitalize(), text_color='white')
         label_nome.grid(row=i, column=0, padx=5, pady=5)
@@ -98,7 +122,7 @@ def iniciar_backup(frame_atual, janela):
         label_email = ctk.CTkLabel(frame_conta, text=conta.email, text_color='white')
         label_email.grid(row=i, column=1, padx=10, pady=5)
 
-        entry_ultimobkp = ctk.CTkEntry(frame_conta, width=100)
+        entry_ultimobkp = ctk.CTkEntry(frame_conta, width=100, text_color='black')
         entry_ultimobkp.insert(0, conta.ultimo_bkp)
         entry_ultimobkp.grid(row=i, column=2, padx=10, pady=5)
         entry_ultimobkp.bind('<Return>', lambda event, e=entry_ultimobkp, id=conta.id: salvar_ultimo_bkp(e, id))
@@ -116,13 +140,13 @@ def iniciar_backup(frame_atual, janela):
         b_ontem = ctk.CTkButton(frame_conta, text='Ontem', width=80, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: atualizar_data_ontem(e, id))
         b_ontem.grid(row=i, column=5, padx=10, pady=5)
 
-        b_verde = ctk.CTkButton(frame_conta, text='✔', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp: e.configure(fg_color='green'))
+        b_verde = ctk.CTkButton(frame_conta, text='✔', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: verde(e, id))
         b_verde.grid(row=i, column=8, padx=10, pady=5)
 
-        b_amarelo = ctk.CTkButton(frame_conta, text='➖', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp: e.configure(fg_color='yellow', text_color='Black'))
+        b_amarelo = ctk.CTkButton(frame_conta, text='➖', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: amarelo(e, id))
         b_amarelo.grid(row=i, column=9, padx=5, pady=5)
 
-        b_vermelho = ctk.CTkButton(frame_conta, text='X', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp: e.configure(fg_color='red'))
+        b_vermelho = ctk.CTkButton(frame_conta, text='X', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: vermelho(e, id))
         b_vermelho.grid(row=i, column=10, padx=5, pady=5)
 
         b_1_neg = ctk.CTkButton(frame_conta, text='-1D', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: diminuir_um_dia(e, id))
