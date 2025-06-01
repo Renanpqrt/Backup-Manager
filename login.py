@@ -2,39 +2,49 @@ from dados.tabelas import User, session
 import customtkinter as ctk
 from CTkMessagebox import CTkMessagebox
 from home import abrir_home
-from util import limpar_tela, resource_path
-from PIL import Image
-from customtkinter import CTkImage
+from util import limpar_tela
+
 
 def abrir_login(janela, frame_atual):
     limpar_tela(frame_atual)
-    
-    frame_fundo = ctk.CTkFrame(frame_atual, width=600, height=500, fg_color="#ffffff")
-    frame_fundo.place(relx=0.5, rely=0.5, anchor='center')
+    janela.configure(fg_color='#111606')
+    janela.geometry('720x360')
 
-    # Frame da imagem de login
-    frame_imagem = ctk.CTkFrame(frame_fundo, width=400, height=500, fg_color='#327bcf')
-    frame_imagem.pack(side='left', fill='both')
+    #Fundo principal
+    frame_fundo = ctk.CTkFrame(frame_atual, width=720, height=320, fg_color="#799b2a")
+    frame_fundo.pack(expand=True, fill="both", padx=20, pady=20)
 
-    fundo_img = Image.open(resource_path("imagens/login.png"))
-    fundo_img = CTkImage(light_image=fundo_img, size=(400, 500))
-    image_label = ctk.CTkLabel(frame_imagem, text='', image=fundo_img)
-    image_label.place(relx=0.5, rely=0.5, anchor='center')
+    #Fundo esquerdo
+    frame_esquerdo = ctk.CTkFrame(frame_fundo, width=280, height=280, fg_color="#111606", corner_radius=15)
+    frame_esquerdo.pack(side="left", padx=(20, 10), pady=20, fill="y")
 
-    # Frame do login
-    frame_login = ctk.CTkFrame(frame_fundo, width=150, height=500, fg_color="#ffffff", corner_radius=20)
-    frame_login.pack(side='right', fill='both', padx=10, pady=10)
-    
-    titulo_login = ctk.CTkLabel(frame_login, text='Login', font=('Arial Rounded MT Bold', 23), text_color="#0c184c")
-    titulo_login.pack(pady=(50, 10))
-    
-    subtitulo_login = ctk.CTkLabel(frame_login, text='Entre com suas credenciais', font=('Arial', 12), text_color="#333333", wraplength=150, justify="center")
-    subtitulo_login.pack(pady=(0, 20))
+    label_logo = ctk.CTkLabel(frame_esquerdo, text="PLR", font=("Montserrat", 36, "bold"), text_color="#F5F5F5")
+    label_logo.place(relx=0.5, rely=0.25, anchor="center")
 
-    entry_user = ctk.CTkEntry(frame_login, placeholder_text='Usuário', fg_color='#e0e0e0', text_color='#0c184c', border_color='#0c184c', corner_radius=10)
+    label_sublogo = ctk.CTkLabel(frame_esquerdo, text="Manager", font=("Montserrat", 20), text_color="#F5F5F5")
+    label_sublogo.place(relx=0.5, rely=0.43, anchor="center")
+
+    label_slogan = ctk.CTkLabel(frame_esquerdo, 
+                                text="Gestão de backups\npara o seu negócio", 
+                                font=("Montserrat", 13), text_color="#F5F5F5", justify="center")
+    label_slogan.place(relx=0.5, rely=0.65, anchor="center")
+
+    #Fundo direito
+    frame_direito = ctk.CTkFrame(frame_fundo, width=380, height=280, fg_color="#FFFFFF", corner_radius=15)
+    frame_direito.pack(side="right", padx=(10, 20), pady=20, fill="both", expand=True)
+
+    label_login = ctk.CTkLabel(frame_direito, text="Login", font=("Montserrat", 24, "bold"), text_color="#333333")
+    label_login.pack(pady=(40, 5))
+
+    label_instrucao = ctk.CTkLabel(frame_direito, 
+                                   text="Insira seu usuário e senha para continuar", 
+                                   font=("Montserrat", 12), text_color="#666666")
+    label_instrucao.pack(pady=(0, 25))
+
+    entry_user = ctk.CTkEntry(frame_direito, placeholder_text='Usuário', fg_color='#e0e0e0', text_color='#0c184c', border_color='#0c184c', corner_radius=10)
     entry_user.pack(pady=10, padx=10, fill='x')
 
-    entry_senha = ctk.CTkEntry(frame_login, placeholder_text='Senha', show="*", fg_color='#e0e0e0', text_color='#0c184c', border_color='#0c184c', corner_radius=10)
+    entry_senha = ctk.CTkEntry(frame_direito, placeholder_text='Senha', show="*", fg_color='#e0e0e0', text_color='#0c184c', border_color='#0c184c', corner_radius=10)
     entry_senha.pack(pady=10, padx=10, fill='x')
 
     def verificar_login():
@@ -48,8 +58,8 @@ def abrir_login(janela, frame_atual):
         else:
            retorno = CTkMessagebox(icon='cancel', message='Usuário ou senha incorreto', title='Login incorreto')
 
-    botao = ctk.CTkButton(frame_login, text='Login', width=120, height=35, command=verificar_login, fg_color="#5247e7", hover_color="#3e36af", text_color='#0c184c', corner_radius=20)
-    botao.pack(pady=30)
+    botao = ctk.CTkButton(frame_direito, text='Login', width=120, height=35, command=verificar_login, fg_color="#5247e7", hover_color="#3e36af", text_color='#0c184c', corner_radius=20)
+    botao.pack(padx=5, pady=5)
 
     
 

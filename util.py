@@ -26,9 +26,11 @@ def limpar_tela(frame_atual):
     for widget in frame_atual.winfo_children():
         widget.destroy()
 
+
 def limpar_area_principal(area_principal):
     for widget in area_principal.winfo_children():
         widget.destroy()
+
 
 def coletar_dados():
     contas = session.query(Conta).all()

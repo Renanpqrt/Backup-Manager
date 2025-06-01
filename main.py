@@ -5,8 +5,8 @@ from util import resource_path
 
 def inciar_app():
     app = ctk.CTk()
-    app.title('Gerenciamento de Backups')
-    app.geometry('550x500')
+    app.title('PLR Manager')
+    app.geometry('900x600')
     app.resizable(False, False)
     app._set_appearance_mode('dark')
     app.iconbitmap(resource_path("imagens/BKP.ico"))

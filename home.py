@@ -6,6 +6,8 @@ from cadastros.cadastro import abrir_cadastros
 from dashboard import dashboard
 
 def criar_menu_lateral(janela, area_principal, frame_atual):
+    from login import abrir_login
+
     menu_lateral = ctk.CTkFrame(frame_atual, width=200, fg_color="#111606")
     menu_lateral.pack(side="left", fill="y")
 
@@ -24,6 +26,9 @@ def criar_menu_lateral(janela, area_principal, frame_atual):
     btn_bkp_dados = ctk.CTkButton(menu_lateral, text="Backups de Dados", command=lambda: backup_dados(janela, area_principal), fg_color="#799b2a", hover_color="#52796f", corner_radius=8, height=40)
     btn_bkp_dados.pack(pady=8, padx=15, fill="x")
 
+    btn_bloquear = ctk.CTkButton(menu_lateral, text="Bloquear", command=lambda: abrir_login(janela, frame_atual), fg_color="#799b2a", hover_color="#52796f", corner_radius=8, height=40)
+    btn_bloquear.pack(pady=8, padx=15, fill="x")
+
 
 def criar_area_principal(area_principal):
     area_principal = ctk.CTkFrame(area_principal, fg_color="#799b2a")
@@ -33,7 +38,6 @@ def criar_area_principal(area_principal):
 
 
 def abrir_home(janela, frame_atual):
-    from login import abrir_login
     limpar_tela(frame_atual)
     janela.geometry('900x600')
      
