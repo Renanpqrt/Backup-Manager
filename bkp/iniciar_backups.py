@@ -1,14 +1,14 @@
 import customtkinter as ctk
 from dados.tabelas import Conta, session
 from datetime import date, timedelta, datetime
-from util import b_exportar, resource_path, importar_ultima_alteracao
+from util import b_exportar, importar_ultima_alteracao
 from functools import partial
 
 
-def iniciar_backup(frame_atual, janela):
+def iniciar_backup(janela):
     bkp = ctk.CTkToplevel()
     bkp.geometry('1000x900')
-    bkp.configure(fg_color='#08254b')
+    bkp.configure(fg_color='#455818')
     bkp.wm_attributes('-topmost', 1)
     bkp.after(100, lambda: bkp.wm_attributes('-topmost', 0))
     bkp.title('Backups (Em andamento)')
@@ -16,13 +16,13 @@ def iniciar_backup(frame_atual, janela):
     texto = ctk.CTkLabel(bkp, text='Iniciando Backups', text_color='white', font=('Arial', 25))
     texto.place(relx=0.5, rely=0.05, anchor='center')
 
-    export = ctk.CTkButton(bkp, text='Exportar dados', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: b_exportar(frame_atual, janela))
+    export = ctk.CTkButton(bkp, text='Exportar dados', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: b_exportar(janela))
     export.place(relx=0.1, rely=0.05, anchor='center')
 
-    importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: importar_ultima_alteracao(frame_atual))
+    importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: importar_ultima_alteracao())
     importar.place(relx=0.75, rely=0.05)
 
-    frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#08254b')
+    frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#455818')
     frame_conta.place(relx=0.5, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
 
     def atualizar_data_hoje(e, id):

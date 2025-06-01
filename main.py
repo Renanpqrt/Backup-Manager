@@ -10,9 +10,8 @@ def inciar_app():
     app.resizable(False, False)
     app._set_appearance_mode('dark')
     app.iconbitmap(resource_path("imagens/BKP.ico"))
-    app.configure(fg_color="#08254b")
-
-    frame_principal = ctk.CTkFrame(app, fg_color='#08254b')
+   
+    frame_principal = ctk.CTkFrame(app, fg_color='#111606')
     frame_principal.pack(fill="both", expand=True)
 
     abrir_login(app, frame_principal)

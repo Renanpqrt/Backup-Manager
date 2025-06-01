@@ -26,8 +26,11 @@ def limpar_tela(frame_atual):
     for widget in frame_atual.winfo_children():
         widget.destroy()
 
+def limpar_area_principal(area_principal):
+    for widget in area_principal.winfo_children():
+        widget.destroy()
 
-def coletar_dados(frame_atual, janela):
+def coletar_dados():
     contas = session.query(Conta).all()
 
     dados = []
@@ -44,7 +47,7 @@ def coletar_dados(frame_atual, janela):
     return pd.DataFrame(dados)
 
 
-def exportar_para_excel(df, frame_atual, janela):
+def exportar_para_excel(df, janela):
     cores_status = {
         'green': 'FF008000',
         'yellow': 'FFFFFF00',
@@ -97,12 +100,12 @@ def exportar_para_excel(df, frame_atual, janela):
                 celula.border = borda_preta
 
 
-def b_exportar(frame_atual, janela):
-    df = coletar_dados(frame_atual, janela)
-    exportar_para_excel(df, frame_atual, janela)
+def b_exportar(janela):
+    df = coletar_dados()
+    exportar_para_excel(df, janela)
 
 
-def coletar_dados2(frame_atual, janela):
+def coletar_dados2():
     contas = session.query(Conta_dados).all()
 
     dados = []
@@ -119,11 +122,11 @@ def coletar_dados2(frame_atual, janela):
     return pd.DataFrame(dados)
 
 
-def b_exportar2(frame_atual, janela):
-    df = coletar_dados2(frame_atual, janela)
-    exportar_para_excel(df, frame_atual, janela)
+def b_exportar2(janela):
+    df = coletar_dados2()
+    exportar_para_excel(df, janela)
 
-def importar_ultima_alteracao(frame_atual):
+def importar_ultima_alteracao():
     # Abre o seletor de arquivos para escolher o Excel
     filepath = filedialog.askopenfilename(
         title="Selecione o arquivo Excel",

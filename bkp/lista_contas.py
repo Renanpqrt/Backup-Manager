@@ -1,32 +1,25 @@
 import customtkinter as ctk
 from dados.tabelas import Conta, session
-from util import limpar_tela, resource_path
-from PIL import Image
-from customtkinter import CTkImage
+from util import limpar_area_principal
 from bkp.iniciar_backups import iniciar_backup
 
-def abrir_backups(janela, frame_atual):
-    limpar_tela(frame_atual)
-    from home import abrir_home
+def abrir_backups(janela, area_principal):
+    limpar_area_principal(area_principal)
     
-    titulo_backups = ctk.CTkLabel(frame_atual, text='Lista de Contas', font=('Helvetica', 24), text_color='white')
+    
+    titulo_backups = ctk.CTkLabel(area_principal, text='Contas de Backup', font=('Helvetica', 30, 'bold'), text_color='#1b4332')
     titulo_backups.pack(anchor='n', pady=10, padx=0.5)
 
-    voltar_imag = Image.open(resource_path("imagens/voltar.png"))
-    voltar_imag = CTkImage(light_image=voltar_imag, size=(30, 30))
-
-    voltar_home = ctk.CTkButton(frame_atual, image=voltar_imag, width=80, fg_color='transparent', hover_color='#A9A9A9', text='', command=lambda: abrir_home(janela, frame_atual))
-    voltar_home.place(relx=0.98, rely=0.025, anchor='ne')
-
-    iniciar = ctk.CTkButton(frame_atual, text='Iniciar Backups', fg_color='#0d1b2a', hover_color='#0d1b2a', width=80, command=lambda: iniciar_backup(frame_atual, janela))
+    iniciar = ctk.CTkButton(area_principal, text='Iniciar Backups', fg_color="#111606", hover_color='#111606', width=80, command=lambda: iniciar_backup(janela), 
+    text_color='#aede3c', corner_radius=12)
     iniciar.place(relx=0.025, rely=0.02)
 
-    frame_contas = ctk.CTkScrollableFrame(frame_atual, width=520, height=425, fg_color='#08254b')
+    frame_contas = ctk.CTkScrollableFrame(area_principal, width=700, height=425, fg_color='#799b2a')
     frame_contas.place(relx=0.5, rely=0.55, anchor='center')
 
     for i, conta in enumerate(session.query(Conta).all()):
-        label_nome = ctk.CTkLabel(frame_contas, text=conta.nome.capitalize(), text_color='white')
+        label_nome = ctk.CTkLabel(frame_contas, text=conta.nome.capitalize(), text_color='#222c0c', font=('Helvetica', 15, 'bold'))
         label_nome.grid(row=i, column=0, padx=5, pady=5)
 
-        label_email = ctk.CTkLabel(frame_contas, text=conta.email, text_color='white')
+        label_email = ctk.CTkLabel(frame_contas, text=conta.email, text_color='#222c0c', font=('Helvetica', 15, 'bold'))
         label_email.grid(row=i, column=1, padx=10, pady=5)
