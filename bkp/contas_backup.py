@@ -12,7 +12,7 @@ def iniciar_backup(janela):
     bkp.after(100, lambda: bkp.wm_attributes('-topmost', 0))
     bkp.title('Backups (Em andamento)')
     
-    texto = ctk.CTkLabel(bkp, text='Iniciando Backups', text_color='white', font=('Arial', 25))
+    texto = ctk.CTkLabel(bkp, text='Backups', text_color='#0d1b2a', font=('Helvetica', 30, 'bold'))
     texto.place(relx=0.5, rely=0.05, anchor='center')
 
     export = ctk.CTkButton(bkp, text='Exportar dados', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: b_exportar(janela))
@@ -121,10 +121,10 @@ def iniciar_backup(janela):
         label.update()
 
     for i, conta in enumerate(session.query(Conta).all()):
-        label_nome = ctk.CTkLabel(frame_conta, text=conta.nome.capitalize(), text_color='white')
+        label_nome = ctk.CTkLabel(frame_conta, text=conta.nome.capitalize(), text_color='#0d1b2a', font=('Helvetica', 17, 'bold'))
         label_nome.grid(row=i, column=0, padx=5, pady=5)
 
-        label_email = ctk.CTkLabel(frame_conta, text=conta.email, text_color='white')
+        label_email = ctk.CTkLabel(frame_conta, text=conta.email, text_color='#0d1b2a', font=('Helvetica', 17, 'bold'))
         label_email.grid(row=i, column=1, padx=10, pady=5)
         label_email.bind("<Button-1>", lambda event, lbl=label_email: copiar_para_clipboard(event, lbl))
 
@@ -140,25 +140,25 @@ def iniciar_backup(janela):
             entry_segundobkp.bind('<Return>', lambda event, e=entry_segundobkp, id=conta.id: salvar_segundo_backup(e, id))
 
 
-        b_hoje = ctk.CTkButton(frame_conta, text='Hoje', width=80, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: atualizar_data_hoje(e, id))
+        b_hoje = ctk.CTkButton(frame_conta, text='Hoje', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda e=entry_ultimobkp, id=conta.id: atualizar_data_hoje(e, id))
         b_hoje.grid(row=i, column=4, padx=10, pady=5)
 
-        b_ontem = ctk.CTkButton(frame_conta, text='Ontem', width=80, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: atualizar_data_ontem(e, id))
+        b_ontem = ctk.CTkButton(frame_conta, text='Ontem', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda e=entry_ultimobkp, id=conta.id: atualizar_data_ontem(e, id))
         b_ontem.grid(row=i, column=5, padx=10, pady=5)
 
-        b_verde = ctk.CTkButton(frame_conta, text='✔', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: verde(e, id))
+        b_verde = ctk.CTkButton(frame_conta, text='✔', width=60, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda e=entry_ultimobkp, id=conta.id: verde(e, id))
         b_verde.grid(row=i, column=8, padx=10, pady=5)
 
-        b_amarelo = ctk.CTkButton(frame_conta, text='➖', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: amarelo(e, id))
+        b_amarelo = ctk.CTkButton(frame_conta, text='➖', width=60, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda e=entry_ultimobkp, id=conta.id: amarelo(e, id))
         b_amarelo.grid(row=i, column=9, padx=5, pady=5)
 
-        b_vermelho = ctk.CTkButton(frame_conta, text='X', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: vermelho(e, id))
+        b_vermelho = ctk.CTkButton(frame_conta, text='X', width=60, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda e=entry_ultimobkp, id=conta.id: vermelho(e, id))
         b_vermelho.grid(row=i, column=10, padx=5, pady=5)
 
-        b_1_neg = ctk.CTkButton(frame_conta, text='-1D', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: diminuir_um_dia(e, id))
+        b_1_neg = ctk.CTkButton(frame_conta, text='-1D', width=60, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda e=entry_ultimobkp, id=conta.id: diminuir_um_dia(e, id))
         b_1_neg.grid(row=i, column=7, padx=5, pady=5)
 
-        b_1_pos = ctk.CTkButton(frame_conta, text='+1D', width=60, fg_color='gray20', hover_color='gray20', command=lambda e=entry_ultimobkp, id=conta.id: aumentar_um_dia(e, id))
+        b_1_pos = ctk.CTkButton(frame_conta, text='+1D', width=60, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda e=entry_ultimobkp, id=conta.id: aumentar_um_dia(e, id))
         b_1_pos.grid(row=i, column=6, padx=5, pady=5)
 
 # Lista das contas

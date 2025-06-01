@@ -116,7 +116,7 @@ def coletar_dados2():
             'Email': dado.email,
             'Ultimo Backup': dado.ultimo_bkp,
             'OBS': dado.obs,
-            'cor': dado.cor_ultimo_backup
+            'Cor': dado.cor_ultimo_backup
         })
     
     return pd.DataFrame(dados)
