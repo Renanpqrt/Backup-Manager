@@ -1,8 +1,9 @@
 import customtkinter as ctk
 from util import limpar_tela, limpar_area_principal
-from bkp.lista_contas import abrir_backups
+from bkp.contas_backup import abrir_backups
 from bkp.contas_dados import backup_dados
 from cadastros.cadastro import abrir_cadastros
+from dashboard import dashboard
 
 def criar_menu_lateral(janela, area_principal, frame_atual):
     menu_lateral = ctk.CTkFrame(frame_atual, width=200, fg_color="#111606")
@@ -22,52 +23,6 @@ def criar_menu_lateral(janela, area_principal, frame_atual):
 
     btn_bkp_dados = ctk.CTkButton(menu_lateral, text="Backups de Dados", command=lambda: backup_dados(janela, area_principal), fg_color="#799b2a", hover_color="#52796f", corner_radius=8, height=40)
     btn_bkp_dados.pack(pady=8, padx=15, fill="x")
-
-
-def dashboard(area_principal):
-    limpar_area_principal(area_principal)
-
-    header = ctk.CTkLabel(area_principal, text="Dashboard", font=ctk.CTkFont(size=30, weight="bold"), text_color="#1b4332")
-    header.pack(pady=20)
-
-    card_frame = ctk.CTkFrame(area_principal, fg_color="white", corner_radius=10)
-    card_frame.pack(pady=20, padx=20, fill="both", expand=True)
-    
-    # Card 1
-    card1 = ctk.CTkFrame(card_frame, fg_color="#52796f", corner_radius=12)
-    card1.grid(row=0, column=0, padx=20, pady=30, sticky="nsew")
-
-    label_title1 = ctk.CTkLabel(card1, text='Usuários', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
-    label_title1.pack(padx=20, pady=(20, 5))
-
-    label_value1 = ctk.CTkLabel(card1, text='10', font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
-    label_value1.pack(padx=20, pady=(0, 20))
-
-
-    # Card 2
-    card2 = ctk.CTkFrame(card_frame, fg_color="#52796f", corner_radius=12)
-    card2.grid(row=0, column=1, padx=20, pady=30, sticky="nsew")
-
-    label_title2 = ctk.CTkLabel(card2, text='Backups', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
-    label_title2.pack(padx=20, pady=(20, 5))
-
-    label_value2 = ctk.CTkLabel(card2, text='2', font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
-    label_value2.pack(padx=20, pady=(0, 20))
-
-
-    # Card 3
-    card3 = ctk.CTkFrame(card_frame, fg_color="#52796f", corner_radius=12)
-    card3.grid(row=0, column=2, padx=20, pady=30, sticky="nsew")
-
-    label_title3 = ctk.CTkLabel(card3, text='Pendentes', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
-    label_title3.pack(padx=20, pady=(20, 5))
-
-    label_value3 = ctk.CTkLabel(card3, text='5', font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
-    label_value3.pack(padx=20, pady=(0, 20))
-
-
-    
-    card_frame.grid_columnconfigure((0, 1, 2), weight=1)
 
 
 def criar_area_principal(area_principal):
