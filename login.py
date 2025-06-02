@@ -11,7 +11,7 @@ def abrir_login(janela, frame_atual):
     janela.geometry('720x360')
 
     #Fundo principal
-    frame_fundo = ctk.CTkFrame(frame_atual, width=720, height=320, fg_color="#799b2a")
+    frame_fundo = ctk.CTkFrame(frame_atual, width=720, height=320, fg_color="#6f8c3e")
     frame_fundo.pack(expand=True, fill="both", padx=20, pady=20)
 
     #Fundo esquerdo
