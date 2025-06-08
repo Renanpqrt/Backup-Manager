@@ -96,12 +96,12 @@ def iniciar_backup(janela):
         label_email.grid(row=i, column=1, padx=10, pady=5)
         label_email.bind("<Button-1>", lambda event, lbl=label_email: copiar_para_clipboard(event, lbl))
 
-        entry_ultimobkp = ctk.CTkEntry(frame_conta, width=100)
+        entry_ultimobkp = ctk.CTkEntry(frame_conta, width=100, fg_color='#ffffff')
         entry_ultimobkp.insert(0, conta.ultimo_bkp)
         entry_ultimobkp.grid(row=i, column=2, padx=10, pady=5)
         entry_ultimobkp.bind('<Return>', lambda event, e=entry_ultimobkp, id=conta.id: salvar_ultimobkp(e, id))
 
-        entry_obs = ctk.CTkEntry(frame_conta, width=100)
+        entry_obs = ctk.CTkEntry(frame_conta, width=100, fg_color='#ffffff')
         entry_obs.insert(0, conta.obs)
         entry_obs.grid(row=i, column=3, padx=10, pady=5)
         entry_obs.bind('<Return>', lambda event, e=entry_obs, id=conta.id: salvar_obs(e, id))

@@ -4,6 +4,7 @@ from bkp.contas_backup import abrir_backups
 from bkp.contas_dados import backup_dados
 from cadastros.cadastro import abrir_cadastros
 from dashboard import dashboard
+from relatorios import abrir_relatorios
 
 def criar_menu_lateral(janela, area_principal, frame_atual):
     from login import abrir_login
@@ -25,6 +26,9 @@ def criar_menu_lateral(janela, area_principal, frame_atual):
 
     btn_bkp_dados = ctk.CTkButton(menu_lateral, text="Backups de Dados", command=lambda: backup_dados(janela, area_principal), fg_color="#799b2a", hover_color="#52796f", corner_radius=8, height=40)
     btn_bkp_dados.pack(pady=8, padx=15, fill="x")
+
+    btn_relatorios = ctk.CTkButton(menu_lateral, text="Relatórios", command=lambda: abrir_relatorios(janela, area_principal), fg_color="#799b2a", hover_color="#52796f", corner_radius=8, height=40)
+    btn_relatorios.pack(pady=8, padx=15, fill="x")
 
     btn_bloquear = ctk.CTkButton(menu_lateral, text="Bloquear", command=lambda: abrir_login(janela, frame_atual), fg_color="#799b2a", hover_color="#52796f", corner_radius=8, height=40)
     btn_bloquear.pack(pady=8, padx=15, fill="x")
