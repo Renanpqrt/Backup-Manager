@@ -14,7 +14,7 @@ def abrir_relatorios(janela, area_principal):
     limpar_area_principal(area_principal)
     dados = [conta for conta in session.query(Conta).all()]
 
-    label_titulo = ctk.CTkLabel(area_principal, text='Relatórios', font=('Arial', 30, 'bold'), text_color="#1b4332")
+    label_titulo = ctk.CTkLabel(area_principal, text='Relatórios', font=('Arial', 30, 'bold'), text_color="#EAEAEA")
     label_titulo.pack(anchor='n', pady=10, padx=0.5)
 
     def relat_contas():
@@ -83,6 +83,6 @@ def abrir_relatorios(janela, area_principal):
         
         relatorio.build(elementos)
 
-    rel_contas = ctk.CTkButton(area_principal, text='Contas de Backup', fg_color="#111606", hover_color='#111606', width=80, command=relat_contas, 
-    text_color='#aede3c', corner_radius=12)
+    rel_contas = ctk.CTkButton(area_principal, text='Contas de Backup', fg_color="#00B4D8", hover_color='#0096C7', width=80, command=relat_contas, 
+    text_color='#EAEAEA', corner_radius=12)
     rel_contas.place(relx=0.015, rely=0.08)

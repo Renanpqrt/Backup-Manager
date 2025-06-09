@@ -3,49 +3,57 @@ import customtkinter as ctk
 from CTkMessagebox import CTkMessagebox
 from home import abrir_home
 from util import limpar_tela
-
+from datetime import date, datetime
+import locale
 
 def abrir_login(janela, frame_atual):
     limpar_tela(frame_atual)
-    janela.configure(fg_color='#111606')
-    janela.geometry('720x360')
+    janela.configure(fg_color='#2B2B2B')
+    janela.geometry('900x550')
 
-    #Fundo principal
-    frame_fundo = ctk.CTkFrame(frame_atual, width=720, height=320, fg_color="#6f8c3e")
-    frame_fundo.pack(expand=True, fill="both", padx=20, pady=20)
+    # Frame esquerdo
+    left_frame = ctk.CTkFrame(frame_atual, width=400, fg_color="#2B2B2B")
+    left_frame.pack(side="left", fill="both", expand=True)
 
-    #Fundo esquerdo
-    frame_esquerdo = ctk.CTkFrame(frame_fundo, width=280, height=280, fg_color="#111606", corner_radius=15)
-    frame_esquerdo.pack(side="left", padx=(20, 10), pady=20, fill="y")
+    # Texto no painel esquerdo
+    welcome_label = ctk.CTkLabel(left_frame, text="🔒 PLR Manager", font=("Arial", 24, "bold"), text_color="#EEEEEE")
+    welcome_label.place(relx=0.5, rely=0.3, anchor="center")
 
-    label_logo = ctk.CTkLabel(frame_esquerdo, text="PLR", font=("Montserrat", 36, "bold"), text_color="#F5F5F5")
-    label_logo.place(relx=0.5, rely=0.25, anchor="center")
+    info_label = ctk.CTkLabel(left_frame, text="Organize, controle e acesse com facilidade", font=("Arial", 14), text_color="#EEEEEE", wraplength=300, justify="center")
+    info_label.place(relx=0.5, rely=0.4, anchor="center")
 
-    label_sublogo = ctk.CTkLabel(frame_esquerdo, text="Manager", font=("Montserrat", 20), text_color="#F5F5F5")
-    label_sublogo.place(relx=0.5, rely=0.43, anchor="center")
+    # Datas no painel esquerdo
+    locale.setlocale(locale.LC_TIME, 'Portuguese_Brazil.1252')
+    hora = datetime.today().strftime("%H:%M")
+    data = date.today().strftime("%a, %d de %b")
 
-    label_slogan = ctk.CTkLabel(frame_esquerdo, 
-                                text="Gestão de backups\npara o seu negócio", 
-                                font=("Montserrat", 13), text_color="#F5F5F5", justify="center")
-    label_slogan.place(relx=0.5, rely=0.65, anchor="center")
+    hora_label = ctk.CTkLabel(left_frame, text=hora, text_color="#EEEEEE", font=("Arial", 15))
+    hora_label.place(relx=0.9, rely=0.8, anchor='center')
 
-    #Fundo direito
-    frame_direito = ctk.CTkFrame(frame_fundo, width=380, height=280, fg_color="#FFFFFF", corner_radius=15)
-    frame_direito.pack(side="right", padx=(10, 20), pady=20, fill="both", expand=True)
+    data_label = ctk.CTkLabel(left_frame, text=data.title(), font=("Arial", 16), text_color="#EEEEEE")
+    data_label.place(relx=0.15, rely=0.08, anchor='center')
 
-    label_login = ctk.CTkLabel(frame_direito, text="Login", font=("Montserrat", 24, "bold"), text_color="#333333")
-    label_login.pack(pady=(40, 5))
 
-    label_instrucao = ctk.CTkLabel(frame_direito, 
-                                   text="Insira seu usuário e senha para continuar", 
-                                   font=("Montserrat", 12), text_color="#666666")
-    label_instrucao.pack(pady=(0, 25))
 
-    entry_user = ctk.CTkEntry(frame_direito, placeholder_text='Usuário', fg_color='#e0e0e0', text_color='#0c184c', border_color='#0c184c', corner_radius=10)
-    entry_user.pack(pady=10, padx=10, fill='x')
+    # Frame direito - login
+    right_frame = ctk.CTkFrame(frame_atual, fg_color="#1E1E1E")
+    right_frame.pack(side="right", fill="both", expand=True)
 
-    entry_senha = ctk.CTkEntry(frame_direito, placeholder_text='Senha', show="*", fg_color='#e0e0e0', text_color='#0c184c', border_color='#0c184c', corner_radius=10)
-    entry_senha.pack(pady=10, padx=10, fill='x')
+    # Título
+    login_label = ctk.CTkLabel(right_frame, text="Login", font=("Arial", 28, "bold"), text_color='gray')
+    login_label.pack(pady=(60, 10))
+
+   # Subtítulo
+    subtitle = ctk.CTkLabel(right_frame, text="Acesse sua conta", font=("Arial", 16), text_color="gray")
+    subtitle.pack(pady=(0, 30))
+
+    # Entrada - Usuário
+    entry_user = ctk.CTkEntry(right_frame, placeholder_text="Usuário", width=300)
+    entry_user.pack(pady=10)
+
+    # Entrada - Senha
+    entry_senha = ctk.CTkEntry(right_frame, placeholder_text="Senha", show="*", width=300)
+    entry_senha.pack(pady=10)
 
     def verificar_login():
         usuario = entry_user.get().lower()
@@ -58,8 +66,13 @@ def abrir_login(janela, frame_atual):
         else:
            retorno = CTkMessagebox(icon='cancel', message='Usuário ou senha incorreto', title='Login incorreto')
 
-    botao = ctk.CTkButton(frame_direito, text='Login', width=120, height=35, command=verificar_login, fg_color="#5247e7", hover_color="#3e36af", text_color='#0c184c', corner_radius=20)
-    botao.pack(padx=5, pady=5)
+    # Botão
+    btn_login = ctk.CTkButton(right_frame, text="Entrar", command=verificar_login, width=200, fg_color="#00B4D8", hover_color="#0096C7")
+    btn_login.pack(pady=30)
+
+    # Link fictício - Não esta pronto
+    # link_label = ctk.CTkLabel(right_frame, text="Esqueci a senha", font=("Arial", 12), text_color="gray")
+    # link_label.pack()
 
     
 

@@ -9,28 +9,28 @@ def abrir_cadastro_contas(area_principal):
     from cadastros.cadastro import abrir_cadastros
     limpar_area_principal(area_principal)
 
-    titulo = ctk.CTkLabel(area_principal, text='Cadastros De Contas', font=('Helvetica', 30, "bold"), fg_color="#799b2a", text_color='#1b4332')
+    titulo = ctk.CTkLabel(area_principal, text='Cadastros De Contas', font=('Helvetica', 30, "bold"), fg_color="#1E1E1E", text_color='#EAEAEA')
     titulo.place(relx=0.5, rely=0.05, anchor='center')
 
     voltar_imag = Image.open(resource_path("imagens/voltar.png"))
     voltar_imag = CTkImage(light_image=voltar_imag, size=(30, 30))
 
-    voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#799b2a', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastros(area_principal), bg_color='#799b2a')
+    voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#1E1E1E', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastros(area_principal), bg_color='#1E1E1E')
     voltar_cadastros.place(relx=0.98, rely=0.025, anchor='ne')
 
     criar_img = Image.open(resource_path("imagens/adicionar.png"))
     criar_img = CTkImage(light_image=criar_img, size=(35, 35))
 
-    criar_u = ctk.CTkButton(area_principal, image=criar_img, text='', fg_color='#799b2a', hover_color='#A9A9A9', command=lambda: cadastrar_conta(area_principal), width=60)
+    criar_u = ctk.CTkButton(area_principal, image=criar_img, text='', fg_color='#1E1E1E', hover_color='#A9A9A9', command=lambda: cadastrar_conta(area_principal), width=60)
     criar_u.place(relx=0.06, rely=0.045, anchor='center')
 
     excl_img = Image.open(resource_path("imagens/excluir.png"))
     excl_img = CTkImage(light_image=excl_img, size=(35, 35))
 
-    deletar_u = ctk.CTkButton(area_principal, image=excl_img, text='', fg_color='#799b2a', hover_color='#A9A9A9', command=lambda: deletar_contas(area_principal), width=60)
+    deletar_u = ctk.CTkButton(area_principal, image=excl_img, text='', fg_color='#1E1E1E', hover_color='#A9A9A9', command=lambda: deletar_contas(area_principal), width=60)
     deletar_u.place(relx=0.155, rely=0.045, anchor='center')
 
-    tabela = ctk.CTkTabview(master=area_principal, width=700, height=400, fg_color="#799b2a", segmented_button_fg_color="#799b2a",
+    tabela = ctk.CTkTabview(master=area_principal, width=700, height=400, fg_color="#1E1E1E", segmented_button_fg_color="#1E1E1E",
     segmented_button_selected_color="#011125", segmented_button_selected_hover_color="#011125", segmented_button_unselected_color="gray20", segmented_button_unselected_hover_color="gray20")
     
     tabela.place(relx=0.5, rely=0.5, anchor='center')
@@ -42,18 +42,18 @@ def abrir_cadastro_contas(area_principal):
     aba_contas = tabela.tab("Contas")
     aba_contas_dados = tabela.tab("Contas de dados")
 
-    frame_contas = ctk.CTkScrollableFrame(aba_contas, width=700, height=400, fg_color='#799b2a')
+    frame_contas = ctk.CTkScrollableFrame(aba_contas, width=700, height=400, fg_color='#1E1E1E')
     frame_contas.pack(padx=0, pady=0, fill="both", expand=True)
 
-    frame_dados = ctk.CTkScrollableFrame(aba_contas_dados, width=700, height=400, fg_color='#799b2a')
+    frame_dados = ctk.CTkScrollableFrame(aba_contas_dados, width=700, height=400, fg_color='#1E1E1E')
     frame_dados.pack(padx=0, pady=0, fill="both", expand=True)
 
     for i, conta in enumerate(session.query(Conta).all()):
-        label_c = ctk.CTkLabel(frame_contas, text=conta.nome.capitalize(), text_color='#222c0c', font=('Helvetica', 15, 'bold'))
+        label_c = ctk.CTkLabel(frame_contas, text=conta.nome.capitalize(), text_color='#EAEAEA', font=('Helvetica', 15, 'bold'))
         label_c.grid(row=i, column=0, padx=10, pady=5)
 
     for i, conta in enumerate(session.query(Conta_dados).all()):
-        label_c = ctk.CTkLabel(frame_dados, text=conta.nome.capitalize(), text_color='#222c0c', font=('Helvetica', 15, 'bold'))
+        label_c = ctk.CTkLabel(frame_dados, text=conta.nome.capitalize(), text_color='#EAEAEA', font=('Helvetica', 15, 'bold'))
         label_c.grid(row=i, column=0, padx=10, pady=5)
     
     # Cadastros
@@ -63,7 +63,7 @@ def abrir_cadastro_contas(area_principal):
         titulo_cadastro = ctk.CTkLabel(area_principal, text='Criação de contas', font=('Helvetica', 30, 'bold'), text_color='#1b4332')
         titulo_cadastro.place(relx=0.5, rely=0.04, anchor='center')
 
-        tabela = ctk.CTkTabview(master=area_principal, width=550, height=400, fg_color="#799b2a", segmented_button_fg_color="#799b2a",
+        tabela = ctk.CTkTabview(master=area_principal, width=550, height=400, fg_color="#1E1E1E", segmented_button_fg_color="#1E1E1E",
     segmented_button_selected_color="#011125", segmented_button_selected_hover_color="#011125", segmented_button_unselected_color="gray20", segmented_button_unselected_hover_color="gray20")
     
         tabela.place(relx=0.5, rely=0.5, anchor='center')
@@ -75,7 +75,7 @@ def abrir_cadastro_contas(area_principal):
         voltar_imag = Image.open(resource_path("imagens/voltar.png"))
         voltar_imag = CTkImage(light_image=voltar_imag, size=(30, 30))
 
-        voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#799b2a', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastro_contas(area_principal), bg_color='#799b2a')
+        voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#1E1E1E', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastro_contas(area_principal), bg_color='#1E1E1E')
         voltar_cadastros.place(relx=0.98, rely=0.025, anchor='ne')
 
         # Cadastro de contas
@@ -155,7 +155,7 @@ def abrir_cadastro_contas(area_principal):
         titulo_cadastro = ctk.CTkLabel(area_principal, text='Exclusão de contas', font=('Helvetica', 30, 'bold'), text_color='#1b4332')
         titulo_cadastro.place(relx=0.5, rely=0.04, anchor='center')
 
-        tabela = ctk.CTkTabview(master=area_principal, width=550, height=400, fg_color="#799b2a", segmented_button_fg_color="#799b2a",
+        tabela = ctk.CTkTabview(master=area_principal, width=550, height=400, fg_color="#1E1E1E", segmented_button_fg_color="#1E1E1E",
     segmented_button_selected_color="#011125", segmented_button_selected_hover_color="#011125", segmented_button_unselected_color="gray20", segmented_button_unselected_hover_color="gray20")
     
         tabela.place(relx=0.5, rely=0.5, anchor='center')
@@ -167,7 +167,7 @@ def abrir_cadastro_contas(area_principal):
         voltar_imag = Image.open(resource_path("imagens/voltar.png"))
         voltar_imag = CTkImage(light_image=voltar_imag, size=(30, 30))
 
-        voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#799b2a', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastro_contas(area_principal), bg_color='#799b2a')
+        voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#1E1E1E', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastro_contas(area_principal), bg_color='#1E1E1E')
         voltar_cadastros.place(relx=0.98, rely=0.025, anchor='ne')
 
         # deletar contas

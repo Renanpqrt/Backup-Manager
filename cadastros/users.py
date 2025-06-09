@@ -13,30 +13,30 @@ def abrir_user(area_principal):
     voltar_imag = Image.open(resource_path("imagens/voltar.png"))
     voltar_imag = CTkImage(light_image=voltar_imag, size=(30, 30))
 
-    voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#799b2a', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastros(area_principal), bg_color='#799b2a')
+    voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#1E1E1E', hover_color='#A9A9A9', text='', command=lambda: abrir_cadastros(area_principal), bg_color='#1E1E1E')
     voltar_cadastros.place(relx=0.98, rely=0.025, anchor='ne')
 
-    titulo_cadastro = ctk.CTkLabel(area_principal, text='Usuários', font=('Helvetica', 30, 'bold'), text_color="#1b4332", fg_color='#799b2a')
+    titulo_cadastro = ctk.CTkLabel(area_principal, text='Usuários', font=('Helvetica', 30, 'bold'), text_color="#EAEAEA", fg_color='#1E1E1E')
     titulo_cadastro.place(relx=0.5, rely=0.05, anchor='center')
 
-    frame_contas = ctk.CTkScrollableFrame(area_principal, width=700, height=500, fg_color='#799b2a')
+    frame_contas = ctk.CTkScrollableFrame(area_principal, width=700, height=500, fg_color='#1E1E1E')
     frame_contas.place(relx=0.5, rely=0.55, anchor='center')
 
     criar_img = Image.open(resource_path("imagens/adicionar.png"))
     criar_img = CTkImage(light_image=criar_img, size=(35, 35))
 
-    criar_u = ctk.CTkButton(area_principal, image=criar_img, text='', fg_color='#799b2a', hover_color='#A9A9A9', command=lambda: criar_user(area_principal), width=60)
+    criar_u = ctk.CTkButton(area_principal, image=criar_img, text='', fg_color='#1E1E1E', hover_color='#A9A9A9', command=lambda: criar_user(area_principal), width=60)
     criar_u.place(relx=0.06, rely=0.045, anchor='center')
 
     excl_img = Image.open(resource_path("imagens/excluir.png"))
     excl_img = CTkImage(light_image=excl_img, size=(35, 35))
 
-    deletar_u = ctk.CTkButton(area_principal, image=excl_img, text='', fg_color='#799b2a', hover_color='#A9A9A9', command=lambda: deletar_user(area_principal), width=60)
+    deletar_u = ctk.CTkButton(area_principal, image=excl_img, text='', fg_color='#1E1E1E', hover_color='#A9A9A9', command=lambda: deletar_user(area_principal), width=60)
     deletar_u.place(relx=0.155, rely=0.045, anchor='center')
 
 
     for i, conta in enumerate(session.query(User).all()):
-        label_user = ctk.CTkLabel(frame_contas, text=conta.nome_user.capitalize(), text_color='#222c0c', font=('Helvetica', 15, 'bold'))
+        label_user = ctk.CTkLabel(frame_contas, text=conta.nome_user.capitalize(), text_color='#EAEAEA', font=('Helvetica', 15, 'bold'))
         label_user.grid(row=i, column=0, pady=5)
 
     def criar_user(area_principal):
@@ -77,7 +77,7 @@ def abrir_user(area_principal):
         voltar_imag = Image.open(resource_path("imagens/voltar.png"))
         voltar_imag = CTkImage(light_image=voltar_imag, size=(30, 30))
 
-        voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#799b2a', hover_color='#A9A9A9', text='', command=lambda: abrir_user(area_principal), bg_color='#799b2a')
+        voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#1E1E1E', hover_color='#A9A9A9', text='', command=lambda: abrir_user(area_principal), bg_color='#1E1E1E')
         voltar_cadastros.place(relx=0.98, rely=0.025, anchor='ne')
 
     def deletar_user(area_principal):
@@ -116,5 +116,5 @@ def abrir_user(area_principal):
         voltar_imag = Image.open(resource_path("imagens/voltar.png"))
         voltar_imag = CTkImage(light_image=voltar_imag, size=(30, 30))
 
-        voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#799b2a', hover_color='#A9A9A9', text='', command=lambda: abrir_user(area_principal), bg_color='#799b2a')
+        voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#1E1E1E', hover_color='#A9A9A9', text='', command=lambda: abrir_user(area_principal), bg_color='#1E1E1E')
         voltar_cadastros.place(relx=0.98, rely=0.025, anchor='ne')
