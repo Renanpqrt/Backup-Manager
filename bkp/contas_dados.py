@@ -4,7 +4,7 @@ from util import limpar_area_principal, b_exportar2, importar_ultima_alteracao
 from datetime import date, timedelta, datetime
 
 # Toplevel dos backups
-def iniciar_backup(janela):
+def iniciar_backup_d(janela):
     bkp = ctk.CTkToplevel()
     bkp.geometry('1000x900')
     bkp.configure(fg_color='#1E1E1E')
@@ -21,7 +21,7 @@ def iniciar_backup(janela):
     importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#0d1b2a', hover_color='#0d1b2a', command=lambda: importar_ultima_alteracao())
     importar.place(relx=0.75, rely=0.05)
 
-    frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#455818')
+    frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#1E1E1E')
     frame_conta.place(relx=0.5, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
 
     def atualizar_data_hoje(e, id):
@@ -121,23 +121,3 @@ def iniciar_backup(janela):
         b_vermelho = ctk.CTkButton(frame_conta, text='X', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: vermelho(e, id))
         b_vermelho.grid(row=i, column=8, padx=5, pady=5)
 
-# Lista das contas de backup
-def backup_dados(janela, area_principal):
-    limpar_area_principal(area_principal)
-
-    titulo_backups = ctk.CTkLabel(area_principal, text='Contas de Dados', font=('Helvetica', 30, 'bold'), text_color='#EAEAEA')
-    titulo_backups.pack(anchor='n', pady=10, padx=0.5)
-
-    iniciar = ctk.CTkButton(area_principal, text='Iniciar Backups', fg_color='#00B4D8', hover_color='#0096C7', width=80, command=lambda: iniciar_backup(janela),
-    text_color="#EAEAEA", corner_radius=12)
-    iniciar.place(relx=0.025, rely=0.02)
-
-    frame_contas = ctk.CTkScrollableFrame(area_principal, width=700, height=425, fg_color='#1E1E1E')
-    frame_contas.place(relx=0.5, rely=0.55, anchor='center')
-
-    for i, conta in enumerate(session.query(Conta_dados).all()):
-        label_nome = ctk.CTkLabel(frame_contas, text=conta.nome.capitalize(), text_color='gray', font=('Helvetica', 15, 'bold'))
-        label_nome.grid(row=i, column=0, padx=5, pady=5)
-
-        label_email = ctk.CTkLabel(frame_contas, text=conta.email, text_color='gray', font=('Helvetica', 15, 'bold'))
-        label_email.grid(row=i, column=1, padx=10, pady=5)

@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from util import limpar_tela, limpar_area_principal
-from bkp.contas_backup import abrir_backups
-from bkp.contas_dados import backup_dados
+from bkp.contas_backup import iniciar_backup
+from bkp.contas_dados import iniciar_backup_d
 from cadastros.cadastro import abrir_cadastros
 from dashboard import dashboard
 from relatorios import abrir_relatorios
@@ -21,10 +21,10 @@ def criar_menu_lateral(janela, area_principal, frame_atual):
     btn_cadastro = ctk.CTkButton(menu_lateral, text="Cadastros", command=lambda: abrir_cadastros(area_principal), fg_color="#00B4D8", hover_color="#0096C7", corner_radius=8, height=40)
     btn_cadastro.pack(pady=8, padx=15, fill="x")
 
-    btn_bkp = ctk.CTkButton(menu_lateral, text="Backups", command=lambda: abrir_backups(janela, area_principal), fg_color="#00B4D8", hover_color="#0096C7", corner_radius=8, height=40)
+    btn_bkp = ctk.CTkButton(menu_lateral, text="Iniciar Backups", command=lambda: iniciar_backup(janela), fg_color="#00B4D8", hover_color="#0096C7", corner_radius=8, height=40)
     btn_bkp.pack(pady=8, padx=15, fill="x")
 
-    btn_bkp_dados = ctk.CTkButton(menu_lateral, text="Backups de Dados", command=lambda: backup_dados(janela, area_principal), fg_color="#00B4D8", hover_color="#0096C7", corner_radius=8, height=40)
+    btn_bkp_dados = ctk.CTkButton(menu_lateral, text="Iniciar Backup de Dados", command=lambda: iniciar_backup_d(janela), fg_color="#00B4D8", hover_color="#0096C7", corner_radius=8, height=40)
     btn_bkp_dados.pack(pady=8, padx=15, fill="x")
 
     btn_relatorios = ctk.CTkButton(menu_lateral, text="Relatórios", command=lambda: abrir_relatorios(janela, area_principal), fg_color="#00B4D8", hover_color="#0096C7", corner_radius=8, height=40)

@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from dados.tabelas import Conta, session
-from util import limpar_area_principal, b_exportar, importar_ultima_alteracao
+from util import b_exportar, importar_ultima_alteracao
 from datetime import date, timedelta, datetime
 
 # Toplevel dos backups
@@ -160,25 +160,3 @@ def iniciar_backup(janela):
 
         b_1_pos = ctk.CTkButton(frame_conta, text='+1D', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: aumentar_um_dia(e, id))
         b_1_pos.grid(row=i, column=6, padx=5, pady=5)
-
-# Lista das contas
-def abrir_backups(janela, area_principal):
-    limpar_area_principal(area_principal)
-    
-    
-    titulo_backups = ctk.CTkLabel(area_principal, text='Contas de Backup', font=('Helvetica', 30, 'bold'), text_color='#EAEAEA')
-    titulo_backups.pack(anchor='n', pady=10, padx=0.5)
-
-    iniciar = ctk.CTkButton(area_principal, text='Iniciar Backups', fg_color="#00B4D8", hover_color='#0096C7', width=80, command=lambda: iniciar_backup(janela), 
-    text_color='#EAEAEA', corner_radius=12)
-    iniciar.place(relx=0.025, rely=0.02)
-
-    frame_contas = ctk.CTkScrollableFrame(area_principal, width=700, height=425, fg_color='#1E1E1E')
-    frame_contas.place(relx=0.5, rely=0.55, anchor='center')
-
-    for i, conta in enumerate(session.query(Conta).all()):
-        label_nome = ctk.CTkLabel(frame_contas, text=conta.nome.capitalize(), text_color='gray', font=('Helvetica', 15, 'bold'))
-        label_nome.grid(row=i, column=0, padx=5, pady=5)
-
-        label_email = ctk.CTkLabel(frame_contas, text=conta.email, text_color='gray', font=('Helvetica', 15, 'bold'))
-        label_email.grid(row=i, column=1, padx=10, pady=5)
