@@ -41,6 +41,7 @@ class Conta(Base):
     ultimo_bkp = Column("ultimo_backup", String)
     segundo_backup = Column("segundo_backup", String)
     cor_ultimo_backup = Column(String)
+    cor_segundo_backup = Column(String)
 
     def __init__(self, nome, email, ultimo_bkp="00/00/00", segundo_backup="S/segundobkp", cor_ultimo_backup="gray20"):
         self.nome = nome
@@ -69,6 +70,7 @@ class Conta_dados(Base):
     ultimo_bkp = Column("ultimo_backup", String)
     obs = Column("obs", String)
     cor_ultimo_backup = Column(String)
+    
 
     def __init__(self, nome, email, ultimo_bkp="00/00/00", obs="S/obs", cor_ultimo_backup="gray20"):
         self.nome = nome

@@ -10,6 +10,8 @@ def abrir_login(janela, frame_atual):
     limpar_tela(frame_atual)
     janela.configure(fg_color='#2B2B2B')
     janela.geometry('900x550')
+    versao = '1.0.1'
+
 
     # Frame esquerdo
     left_frame = ctk.CTkFrame(frame_atual, width=400, fg_color="#2B2B2B")
@@ -71,9 +73,12 @@ def abrir_login(janela, frame_atual):
     btn_login.pack(pady=30)
 
     # Link fictício - Não esta pronto
-    # link_label = ctk.CTkLabel(right_frame, text="Esqueci a senha", font=("Arial", 12), text_color="gray")
-    # link_label.pack()
+    esqueci_b = ctk.CTkButton(right_frame, text="Esqueci a senha", font=("Arial", 12), text_color="gray", fg_color="#1E1E1E", hover_color="#1E1E1E",
+                               command=lambda: CTkMessagebox(title='Esqueceu a senha?', message='Também não sei a sua senha'))
+    esqueci_b.pack()
 
+    label_versao = ctk.CTkLabel(right_frame, text=versao, font=("Arial", 12), text_color="gray")
+    label_versao.pack(pady=50)
     
 
 

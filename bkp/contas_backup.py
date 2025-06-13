@@ -11,18 +11,20 @@ def iniciar_backup(janela):
     bkp.wm_attributes('-topmost', 1)
     bkp.after(100, lambda: bkp.wm_attributes('-topmost', 0))
     bkp.title('Backups (Em andamento)')
-    
-    texto = ctk.CTkLabel(bkp, text='Backups', text_color='#EAEAEA', font=('Helvetica', 30, 'bold'))
-    texto.place(relx=0.5, rely=0.05, anchor='center')
+    entry_ultimos_bkp = {}  # chave: conta.id, valor: CTkEntry
 
-    export = ctk.CTkButton(bkp, text='Exportar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: b_exportar(janela))
-    export.place(relx=0.1, rely=0.05, anchor='center')
 
-    importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: importar_ultima_alteracao())
-    importar.place(relx=0.75, rely=0.05)
+    # Funções
+    def resetar_cores():
+        conta_db = session.query(Conta).all()
+        for conta in conta_db:
+            conta.cor_ultimo_backup = 'white'
+        session.commit()
 
-    frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#1E1E1E')
-    frame_conta.place(relx=0.5, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
+        for conta in conta_db:
+            entry = entry_ultimos_bkp.get(conta.id)
+            if entry:
+                entry.configure(fg_color='white')
 
     def atualizar_data_hoje(e, id):
         e.configure(fg_color='white')
@@ -93,25 +95,37 @@ def iniciar_backup(janela):
         conta_db.segundo_backup = valor
         session.commit()
 
-    def verde(e, id):
+    def verde(e, id, tipo="Primeiro"):
         e.configure(fg_color='green')
-
         conta_db = session.query(Conta).get(id)
-        conta_db.cor_ultimo_backup = 'green'
+        
+        if tipo == "Primeiro":
+            conta_db.cor_ultimo_backup = 'green'
+        else:
+            conta_db.cor_segundo_backup = 'green'
+
         session.commit()
 
-    def amarelo(e, id):
+    def amarelo(e, id, tipo="Primeiro"):
         e.configure(fg_color='yellow')
-
         conta_db = session.query(Conta).get(id)
-        conta_db.cor_ultimo_backup = 'yellow'
+
+        if tipo == "Primeiro":
+            conta_db.cor_ultimo_backup = 'yellow'
+        else:
+            conta_db.cor_segundo_backup = 'yellow'
+        
         session.commit()
 
-    def vermelho(e, id):
+    def vermelho(e, id, tipo="Primeiro"):
         e.configure(fg_color='red')
-
         conta_db = session.query(Conta).get(id)
-        conta_db.cor_ultimo_backup = 'red'
+        
+        if tipo == "Primeiro":
+            conta_db.cor_ultimo_backup = 'red'
+        else:
+            conta_db.cor_segundo_backup = 'red'
+
         session.commit()
 
     def copiar_para_clipboard(event, label):
@@ -120,6 +134,25 @@ def iniciar_backup(janela):
         label.clipboard_append(conteudo)
         label.update()
 
+    # Labels e Buttons
+    texto = ctk.CTkLabel(bkp, text='Backups', text_color='#EAEAEA', font=('Helvetica', 30, 'bold'))
+    texto.place(relx=0.5, rely=0.05, anchor='center')
+
+    export = ctk.CTkButton(bkp, text='Exportar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: b_exportar(janela))
+    export.place(relx=0.1, rely=0.05, anchor='center')
+
+    importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: importar_ultima_alteracao())
+    importar.place(relx=0.75, rely=0.05)
+
+    resetar_cor = ctk.CTkButton(bkp, text='Resetar cores', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=resetar_cores)
+    resetar_cor.place(relx=0.3, rely=0.05, anchor='center')
+
+    # Frame dos BKPs
+    frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#1E1E1E')
+    frame_conta.place(relx=0.5, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
+
+
+    # Area dos BKPs
     for i, conta in enumerate(session.query(Conta).all()):
         label_nome = ctk.CTkLabel(frame_conta, text=conta.nome.capitalize(), text_color='gray', font=('Helvetica', 17, 'bold'))
         label_nome.grid(row=i, column=0, padx=5, pady=5)
@@ -128,16 +161,20 @@ def iniciar_backup(janela):
         label_email.grid(row=i, column=1, padx=10, pady=5)
         label_email.bind("<Button-1>", lambda event, lbl=label_email: copiar_para_clipboard(event, lbl))
 
-        entry_ultimobkp = ctk.CTkEntry(frame_conta, width=100, text_color='black', fg_color='#ffffff')
+        entry_ultimobkp = ctk.CTkEntry(frame_conta, width=100, text_color='black', fg_color=conta.cor_ultimo_backup)
         entry_ultimobkp.insert(0, conta.ultimo_bkp)
         entry_ultimobkp.grid(row=i, column=2, padx=10, pady=5)
         entry_ultimobkp.bind('<Return>', lambda event, e=entry_ultimobkp, id=conta.id: salvar_ultimo_bkp(e, id))
+        entry_ultimos_bkp[conta.id] = entry_ultimobkp  
         
         if len(conta.segundo_backup) > 0:
-            entry_segundobkp = ctk.CTkEntry(frame_conta, width=100, fg_color='#ffffff', text_color='black')
+            entry_segundobkp = ctk.CTkEntry(frame_conta, width=100, fg_color=conta.cor_segundo_backup, text_color='black')
             entry_segundobkp.insert(0, conta.segundo_backup)
             entry_segundobkp.grid(row=i, column=3, padx=10, pady=5)
             entry_segundobkp.bind('<Return>', lambda event, e=entry_segundobkp, id=conta.id: salvar_segundo_backup(e, id))
+            entry_segundobkp.bind('<Up>', lambda event, e=entry_segundobkp, id=conta.id: verde(e, id, tipo="Segundo"))
+            entry_segundobkp.bind('<Down>', lambda event, e=entry_segundobkp, id=conta.id: vermelho(e, id, tipo="Segundo"))
+            entry_segundobkp.bind('<Right>', lambda event, e=entry_segundobkp, id=conta.id: amarelo(e, id, tipo="Segundo"))
 
 
         b_hoje = ctk.CTkButton(frame_conta, text='Hoje', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: atualizar_data_hoje(e, id))
@@ -146,13 +183,13 @@ def iniciar_backup(janela):
         b_ontem = ctk.CTkButton(frame_conta, text='Ontem', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: atualizar_data_ontem(e, id))
         b_ontem.grid(row=i, column=5, padx=10, pady=5)
 
-        b_verde = ctk.CTkButton(frame_conta, text='✔', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: verde(e, id))
+        b_verde = ctk.CTkButton(frame_conta, text='✔', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: verde(e, id, tipo="Primeiro"))
         b_verde.grid(row=i, column=8, padx=10, pady=5)
 
-        b_amarelo = ctk.CTkButton(frame_conta, text='➖', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: amarelo(e, id))
+        b_amarelo = ctk.CTkButton(frame_conta, text='➖', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: amarelo(e, id, tipo="Primeiro"))
         b_amarelo.grid(row=i, column=9, padx=5, pady=5)
 
-        b_vermelho = ctk.CTkButton(frame_conta, text='X', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: vermelho(e, id))
+        b_vermelho = ctk.CTkButton(frame_conta, text='X', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: vermelho(e, id, tipo="Primeiro"))
         b_vermelho.grid(row=i, column=10, padx=5, pady=5)
 
         b_1_neg = ctk.CTkButton(frame_conta, text='-1D', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: diminuir_um_dia(e, id))
