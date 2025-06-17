@@ -5,6 +5,8 @@ from PIL import Image
 from customtkinter import CTkImage
 from CTkMessagebox import CTkMessagebox
 
+senha_exclusão = 'admin123'
+
 def abrir_cadastro_contas(area_principal):
     from cadastros.cadastro import abrir_cadastros
     limpar_area_principal(area_principal)
@@ -178,12 +180,12 @@ def abrir_cadastro_contas(area_principal):
         senha_adm = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite a senha de adm')
         senha_adm.place(relx=0.5, rely=0.23, anchor='center')
 
-        def delete(area_principal):
+        def delete():
             conta = entry_nome.get().lower()
             senha_admin = senha_adm.get().lower()
             conta_banco = session.query(Conta).filter_by(nome=conta).first()
 
-            if senha_admin != "administrador123":
+            if senha_admin != senha_exclusão:
                 retorno = CTkMessagebox(icon='cancel', message='Senha de administrador incorreta!', title='Exclusão de contas (Erro)')
             else:
                 if conta_banco:
@@ -196,7 +198,7 @@ def abrir_cadastro_contas(area_principal):
                 else:
                     retorno = CTkMessagebox(icon='cancel', message='Conta inexistente', title='Exclusão de contas (Erro)')
         
-        b_deletar = ctk.CTkButton(tabela.tab('Contas'), text='Deletar', fg_color='red', hover_color='red', width=80, command=lambda: delete(area_principal))
+        b_deletar = ctk.CTkButton(tabela.tab('Contas'), text='Deletar', fg_color='red', hover_color='red', width=80, command=lambda: delete())
         b_deletar.place(relx=0.5, rely=0.37, anchor='center')
 
         # Deletar conta dados
@@ -207,12 +209,12 @@ def abrir_cadastro_contas(area_principal):
         senha_adm_d = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite a senha de adm')
         senha_adm_d.place(relx=0.5, rely=0.23, anchor='center')
 
-        def delete(area_principal):
+        def delete_dados():
             conta = entry_nome_d.get().lower()
             senha_admin = senha_adm_d.get().lower()
             conta_banco = session.query(Conta_dados).filter_by(nome=conta).first()
 
-            if senha_admin != "administrador123":
+            if senha_admin != senha_exclusão:
                 retorno = CTkMessagebox(icon='cancel', message='Senha de administrador incorreta!', title='Exclusão de contas (Erro)')
             else:
                 if conta_banco:
@@ -225,5 +227,5 @@ def abrir_cadastro_contas(area_principal):
                 else:
                     retorno = CTkMessagebox(icon='cancel', message='Conta inexistente', title='Exclusão de contas (Erro)')
         
-        b_deletar_d = ctk.CTkButton(tabela.tab('Contas de dados'), text='Deletar', fg_color='red', hover_color='red', width=80, command=lambda: delete(area_principal))
+        b_deletar_d = ctk.CTkButton(tabela.tab('Contas de dados'), text='Deletar', fg_color='red', hover_color='red', width=80, command=lambda: delete_dados())
         b_deletar_d.place(relx=0.5, rely=0.37, anchor='center')

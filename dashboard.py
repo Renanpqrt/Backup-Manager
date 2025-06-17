@@ -5,10 +5,6 @@ from dados.tabelas import Conta_dados, Conta, User, session
 def dashboard(area_principal):
     limpar_area_principal(area_principal)
 
-    
-    
-    
-
     header = ctk.CTkLabel(area_principal, text="Dashboard", font=ctk.CTkFont(size=30, weight="bold"), text_color="#EAEAEA")
     header.pack(pady=20)
 
@@ -69,4 +65,23 @@ def dashboard(area_principal):
 
     card_frame.grid_columnconfigure((0, 1, 2), weight=1)
 
+    # Card 6
+    contas_em_dia = [conta for conta in session.query(Conta).all() if conta.cor_ultimo_backup == 'green' and conta.cor_segundo_backup in ['green', '']]
+
+    total_de_contas = [conta for conta in session.query(Conta).all()]
+    try:
+        label_porcentagem = (len(contas_em_dia) / len(total_de_contas)) * 100
+    except ZeroDivisionError:
+        label_porcentagem = 0
+
+    card6 = ctk.CTkFrame(card_frame, fg_color="#00B4D8", corner_radius=12)
+    card6.grid(row=1, column=2, padx=20, pady=30, sticky="nsew")
+
+    label_title6 = ctk.CTkLabel(card6, text='Backups em dia (%)', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
+    label_title6.pack(padx=20, pady=(20, 5))
+
+    label_value6 = ctk.CTkLabel(card6, text=(f'{label_porcentagem}%'), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value6.pack(padx=20, pady=(0, 20))
+
+    
     

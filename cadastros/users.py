@@ -5,6 +5,7 @@ from PIL import Image
 from customtkinter import CTkImage
 from CTkMessagebox import CTkMessagebox
 
+senha_exclusão = 'admin123'
 
 def abrir_user(area_principal):
     from cadastros.cadastro import abrir_cadastros
@@ -98,7 +99,7 @@ def abrir_user(area_principal):
             senha_admin = senha_adm.get().lower()
             usuario_banco = session.query(User).filter_by(nome_user=usuario).first()
 
-            if senha_admin != "administrador123":
+            if senha_admin != senha_exclusão:
                 retorno = CTkMessagebox(icon='cancel', message='Senha de administrador incorreta!', title='Exclusão de usuario (Erro)')
             else:
                 if usuario_banco:

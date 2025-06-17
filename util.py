@@ -43,7 +43,8 @@ def coletar_dados():
             'Email': dado.email,
             'Ultimo Backup': dado.ultimo_bkp,
             'Segundo Backup': dado.segundo_backup if dado.segundo_backup else '',
-            'Cor': dado.cor_ultimo_backup
+            'Cor': dado.cor_ultimo_backup,
+            'Cor2': dado.cor_segundo_backup if dado.segundo_backup else ''
         })
     
     return pd.DataFrame(dados)
@@ -69,7 +70,7 @@ def exportar_para_excel(df, janela):
 
     if caminho:
         with pd.ExcelWriter(caminho, engine='openpyxl') as writer:
-            df.drop(columns=['Cor'], inplace=False).to_excel(writer, index=False, sheet_name='Backup')  # Não exporta coluna 'Cor'
+            df.drop(columns=['Cor', 'Cor2'], inplace=False).to_excel(writer, index=False, sheet_name='Backup')  # Não exporta coluna 'Cor'
             planilha = writer.sheets['Backup']
 
             tamanhos_colunas = {
@@ -79,13 +80,13 @@ def exportar_para_excel(df, janela):
                 'Segundo Backup': 35
             }
 
-            for idx, col in enumerate(df.drop(columns=['Cor']).columns, 1):
+            for idx, col in enumerate(df.drop(columns=['Cor', 'Cor2']).columns, 1):
                 col_letter = get_column_letter(idx)
                 largura = tamanhos_colunas.get(col, 20)
                 planilha.column_dimensions[col_letter].width = largura
 
             num_linhas = df.shape[0] + 1  
-            num_colunas = df.shape[1] - 1  # menos a coluna 'Cor'
+            num_colunas = df.shape[1] - 2  # menos a coluna 'Cor'
 
             for row in range(1, num_linhas + 1):
                 for col in range(1, num_colunas + 1):
@@ -97,6 +98,15 @@ def exportar_para_excel(df, janela):
             for i, cor_valor in enumerate(df['Cor'], start=2):  # começa da linha 2
                 cor_hex = cores_status.get(cor_valor, 'FFFFFFFF')  # branco se não tiver cor
                 celula = planilha.cell(row=i, column=col_index)
+                fill = PatternFill(start_color=cor_hex, end_color=cor_hex, fill_type='solid')
+                celula.fill = fill
+                celula.border = borda_preta
+
+            col_index2 = list(df.columns).index("Segundo Backup") + 1
+
+            for i, cor_valor in enumerate(df['Cor2'], start=2):  # começa da linha 2
+                cor_hex = cores_status.get(cor_valor, 'FFFFFFFF')  # branco se não tiver cor
+                celula = planilha.cell(row=i, column=col_index2)
                 fill = PatternFill(start_color=cor_hex, end_color=cor_hex, fill_type='solid')
                 celula.fill = fill
                 celula.border = borda_preta

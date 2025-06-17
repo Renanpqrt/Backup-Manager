@@ -2,6 +2,7 @@ import customtkinter as ctk
 from dados.tabelas import Conta, session
 from util import b_exportar, importar_ultima_alteracao
 from datetime import date, timedelta, datetime
+from sqlalchemy import and_
 
 # Toplevel dos backups
 def iniciar_backup(janela):
@@ -12,6 +13,7 @@ def iniciar_backup(janela):
     bkp.after(100, lambda: bkp.wm_attributes('-topmost', 0))
     bkp.title('Backups (Em andamento)')
     entry_ultimos_bkp = {}  # chave: conta.id, valor: CTkEntry
+    entry_segundos_bkp = {}
 
 
     # Funções
@@ -19,12 +21,21 @@ def iniciar_backup(janela):
         conta_db = session.query(Conta).all()
         for conta in conta_db:
             conta.cor_ultimo_backup = 'white'
+
+        contas_seg_bkp = session.query(Conta).filter(and_(Conta.segundo_backup != None, Conta.segundo_backup != '')).all()
+
+        for conta in contas_seg_bkp:
+            conta.cor_segundo_backup = 'white'
+            
         session.commit()
 
         for conta in conta_db:
             entry = entry_ultimos_bkp.get(conta.id)
+            entry2 = entry_segundos_bkp.get(conta.id)
             if entry:
                 entry.configure(fg_color='white')
+            if entry2:
+                entry2.configure(fg_color='white')
 
     def atualizar_data_hoje(e, id):
         e.configure(fg_color='white')
@@ -168,13 +179,14 @@ def iniciar_backup(janela):
         entry_ultimos_bkp[conta.id] = entry_ultimobkp  
         
         if len(conta.segundo_backup) > 0:
-            entry_segundobkp = ctk.CTkEntry(frame_conta, width=100, fg_color=conta.cor_segundo_backup, text_color='black')
+            entry_segundobkp = ctk.CTkEntry(frame_conta, width=100, fg_color=(conta.cor_segundo_backup if conta.cor_segundo_backup != '' else 'white'), text_color='black')
             entry_segundobkp.insert(0, conta.segundo_backup)
             entry_segundobkp.grid(row=i, column=3, padx=10, pady=5)
             entry_segundobkp.bind('<Return>', lambda event, e=entry_segundobkp, id=conta.id: salvar_segundo_backup(e, id))
             entry_segundobkp.bind('<Up>', lambda event, e=entry_segundobkp, id=conta.id: verde(e, id, tipo="Segundo"))
             entry_segundobkp.bind('<Down>', lambda event, e=entry_segundobkp, id=conta.id: vermelho(e, id, tipo="Segundo"))
             entry_segundobkp.bind('<Right>', lambda event, e=entry_segundobkp, id=conta.id: amarelo(e, id, tipo="Segundo"))
+            entry_segundos_bkp[conta.id] = entry_segundobkp
 
 
         b_hoje = ctk.CTkButton(frame_conta, text='Hoje', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: atualizar_data_hoje(e, id))

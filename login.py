@@ -5,12 +5,13 @@ from home import abrir_home
 from util import limpar_tela
 from datetime import date, datetime
 import locale
+versao = '1.1.2'
 
 def abrir_login(janela, frame_atual):
     limpar_tela(frame_atual)
     janela.configure(fg_color='#2B2B2B')
     janela.geometry('900x550')
-    versao = '1.0.1'
+    
 
 
     # Frame esquerdo
@@ -25,7 +26,11 @@ def abrir_login(janela, frame_atual):
     info_label.place(relx=0.5, rely=0.4, anchor="center")
 
     # Datas no painel esquerdo
-    locale.setlocale(locale.LC_TIME, 'Portuguese_Brazil.1252')
+    try:
+        locale.setlocale(locale.LC_TIME, 'Portuguese_Brazil.1252')
+    except locale.Error:
+        locale.setlocale(locale.LC_TIME, '')
+    
     hora = datetime.today().strftime("%H:%M")
     data = date.today().strftime("%a, %d de %b")
 
@@ -35,6 +40,12 @@ def abrir_login(janela, frame_atual):
     data_label = ctk.CTkLabel(left_frame, text=data.title(), font=("Arial", 16), text_color="#EEEEEE")
     data_label.place(relx=0.15, rely=0.08, anchor='center')
 
+    # Atualizar o relogio
+
+    def atualizar_relogio():
+        nova_hora = datetime.now().strftime("%H:%M")
+        hora_label.configure(text=nova_hora)
+        hora_label.after(1000, atualizar_relogio)
 
 
     # Frame direito - login
@@ -80,5 +91,7 @@ def abrir_login(janela, frame_atual):
     label_versao = ctk.CTkLabel(right_frame, text=versao, font=("Arial", 12), text_color="gray")
     label_versao.pack(pady=50)
     
+    # Chamando a função pra atualizar o relogio
+    atualizar_relogio()
 
 
