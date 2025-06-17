@@ -80,7 +80,7 @@ def dashboard(area_principal):
     label_title6 = ctk.CTkLabel(card6, text='Backups em dia (%)', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title6.pack(padx=20, pady=(20, 5))
 
-    label_value6 = ctk.CTkLabel(card6, text=(f'{label_porcentagem}%'), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value6 = ctk.CTkLabel(card6, text=(f'{label_porcentagem:.1f}%'), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
     label_value6.pack(padx=20, pady=(0, 20))
 
     
