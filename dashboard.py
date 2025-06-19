@@ -5,6 +5,15 @@ from dados.tabelas import Conta_dados, Conta, User, session
 def dashboard(area_principal):
     limpar_area_principal(area_principal)
 
+    # Variaveis para os cards
+    contas_atrasadas = len([conta.nome for conta in session.query(Conta).filter(Conta.cor_ultimo_backup.in_(['red', 'yellow']))])
+    dados_atrasados = len([conta.nome for conta in session.query(Conta_dados).filter(Conta_dados.cor_ultimo_backup.in_(['red', 'yellow']))])
+    usuarios = len([usuario.nome_user for usuario in session.query(User).all()])
+    contas_dados = len([conta.nome for conta in session.query(Conta_dados).all()])
+    contas = len([conta.nome for conta in session.query(Conta).all()])
+
+    
+    # header
     header = ctk.CTkLabel(area_principal, text="Dashboard", font=ctk.CTkFont(size=30, weight="bold"), text_color="#EAEAEA")
     header.pack(pady=20)
 
@@ -18,7 +27,7 @@ def dashboard(area_principal):
     label_title1 = ctk.CTkLabel(card1, text='Contas Backup', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title1.pack(padx=20, pady=(20, 5))
 
-    label_value1 = ctk.CTkLabel(card1, text=(len([conta.nome for conta in session.query(Conta).all()])), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value1 = ctk.CTkLabel(card1, text=contas, font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
     label_value1.pack(padx=20, pady=(0, 20))
 
 
@@ -29,7 +38,7 @@ def dashboard(area_principal):
     label_title2 = ctk.CTkLabel(card2, text='Contas Dados', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title2.pack(padx=20, pady=(20, 5))
 
-    label_value2 = ctk.CTkLabel(card2, text=(len([conta.nome for conta in session.query(Conta_dados).all()])), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value2 = ctk.CTkLabel(card2, text=contas_dados, font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
     label_value2.pack(padx=20, pady=(0, 20))
 
 
@@ -40,7 +49,7 @@ def dashboard(area_principal):
     label_title3 = ctk.CTkLabel(card3, text='Usuários', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title3.pack(padx=20, pady=(20, 5))
 
-    label_value3 = ctk.CTkLabel(card3, text=(len([usuario.nome_user for usuario in session.query(User).all()])), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value3 = ctk.CTkLabel(card3, text=usuarios, font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
     label_value3.pack(padx=20, pady=(0, 20))
 
     # Card 4
@@ -50,7 +59,7 @@ def dashboard(area_principal):
     label_title4 = ctk.CTkLabel(card4, text='Backups atrasados', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title4.pack(padx=20, pady=(20, 5))
 
-    label_value4 = ctk.CTkLabel(card4, text=(len([conta.nome for conta in session.query(Conta).filter(Conta.cor_ultimo_backup.in_(['red', 'yellow']))])), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value4 = ctk.CTkLabel(card4, text=contas_atrasadas, font=ctk.CTkFont(size=30, weight="bold"), text_color=("#B11E1E" if contas_atrasadas > 0 else 'white'))
     label_value4.pack(padx=20, pady=(0, 20))
 
     # Card 5
@@ -60,7 +69,7 @@ def dashboard(area_principal):
     label_title5 = ctk.CTkLabel(card5, text='Dados atrasados', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title5.pack(padx=20, pady=(20, 5))
 
-    label_value5 = ctk.CTkLabel(card5, text=(len([conta.nome for conta in session.query(Conta_dados).filter(Conta_dados.cor_ultimo_backup.in_(['red', 'yellow']))])), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value5 = ctk.CTkLabel(card5, text=dados_atrasados, font=ctk.CTkFont(size=30, weight="bold"), text_color=('#B11E1E' if dados_atrasados > 0 else 'white'))
     label_value5.pack(padx=20, pady=(0, 20))
 
     card_frame.grid_columnconfigure((0, 1, 2), weight=1)
@@ -80,8 +89,5 @@ def dashboard(area_principal):
     label_title6 = ctk.CTkLabel(card6, text='Backups em dia (%)', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title6.pack(padx=20, pady=(20, 5))
 
-    label_value6 = ctk.CTkLabel(card6, text=(f'{label_porcentagem:.1f}%'), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value6 = ctk.CTkLabel(card6, text=(f'{label_porcentagem:.1f}%'), font=ctk.CTkFont(size=30, weight="bold"), text_color=('green' if int(label_porcentagem) > 0 else 'white'))
     label_value6.pack(padx=20, pady=(0, 20))
-
-    
-    
