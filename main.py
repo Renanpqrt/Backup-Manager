@@ -17,4 +17,5 @@ def inciar_app():
     abrir_login(app, frame_principal)
     app.mainloop()
 
-inciar_app()
+if __name__ == '__main__':
+    inciar_app()

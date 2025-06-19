@@ -11,8 +11,6 @@ def abrir_login(janela, frame_atual):
     limpar_tela(frame_atual)
     janela.configure(fg_color='#2B2B2B')
     janela.geometry('900x550')
-    
-
 
     # Frame esquerdo
     left_frame = ctk.CTkFrame(frame_atual, width=400, fg_color="#2B2B2B")
@@ -47,6 +45,13 @@ def abrir_login(janela, frame_atual):
         hora_label.configure(text=nova_hora)
         hora_label.after(1000, atualizar_relogio)
 
+    # Mostrar senha
+
+    def mostrar_senha():
+        if variavelCheckBox.get() == 1:
+            entry_senha.configure(show='')
+        else:
+            entry_senha.configure(show='*')
 
     # Frame direito - login
     right_frame = ctk.CTkFrame(frame_atual, fg_color="#1E1E1E")
@@ -68,6 +73,13 @@ def abrir_login(janela, frame_atual):
     entry_senha = ctk.CTkEntry(right_frame, placeholder_text="Senha", show="*", width=300)
     entry_senha.pack(pady=10)
 
+    # Mostrar senha
+
+    variavelCheckBox = ctk.IntVar()
+
+    checkBox_senha = ctk.CTkCheckBox(right_frame, command=mostrar_senha, variable=variavelCheckBox, text='Mostrar senha', text_color='#ffffff', hover_color='gray20', fg_color='gray20')
+    checkBox_senha.pack(pady=10)
+
     def verificar_login():
         usuario = entry_user.get().lower()
         senha = entry_senha.get().lower()
@@ -77,15 +89,18 @@ def abrir_login(janela, frame_atual):
         if usuario_banco:
             abrir_home(janela, frame_atual)
         else:
-           retorno = CTkMessagebox(icon='cancel', message='Usuário ou senha incorreto', title='Login incorreto')
+           retorno = CTkMessagebox(icon='cancel', message='Usuário ou senha incorreto', title='Login incorreto', 
+        bg_color='#2B2B2B', fg_color='#2B2B2B', text_color='#EEEEEE', border_color='#2B2B2B', title_color='#EEEEEE', button_color="#00B4D8", button_hover_color='#0096C7', header=True)
 
     # Botão
     btn_login = ctk.CTkButton(right_frame, text="Entrar", command=verificar_login, width=200, fg_color="#00B4D8", hover_color="#0096C7")
     btn_login.pack(pady=30)
 
-    # Link fictício - Não esta pronto
+    # Esqueci a senha
     esqueci_b = ctk.CTkButton(right_frame, text="Esqueci a senha", font=("Arial", 12), text_color="gray", fg_color="#1E1E1E", hover_color="#1E1E1E",
-                               command=lambda: CTkMessagebox(title='Esqueceu a senha?', message='Também não sei a sua senha'))
+                command=lambda: CTkMessagebox(title='Esqueceu a senha?', message='Também não sei a sua senha', bg_color='#2B2B2B', 
+                fg_color='#2B2B2B', text_color='#EEEEEE', border_color='#2B2B2B', title_color='#EEEEEE', button_color="#00B4D8", button_hover_color='#0096C7', header=True))
+    
     esqueci_b.pack()
 
     label_versao = ctk.CTkLabel(right_frame, text=versao, font=("Arial", 12), text_color="gray")

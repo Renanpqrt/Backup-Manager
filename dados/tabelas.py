@@ -13,18 +13,6 @@ else:
     
     db_path = os.path.abspath("meubanco.db")
 
-
-def resource_path(relative_path):
-    if getattr(sys, 'frozen', False):
-        
-        user_folder = os.path.expanduser("~")
-        app_folder = os.path.join(user_folder, "MeuAppBackup")
-        os.makedirs(app_folder, exist_ok=True)
-        return os.path.join(app_folder, relative_path)
-    else:
-       
-        return os.path.join(os.path.abspath("."), relative_path)
-
 db = create_engine(f"sqlite:///{db_path}")
 
 Session = sessionmaker(bind=db)
