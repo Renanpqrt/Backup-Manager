@@ -4,7 +4,7 @@ from bkp.contas_backup import iniciar_backup
 from bkp.contas_dados import iniciar_backup_d
 from cadastros.cadastro import abrir_cadastros
 from dashboard import dashboard
-from relatorios import abrir_relatorios
+from relatorios.relatorios import abrir_relatorios
 
 def criar_menu_lateral(janela, area_principal, frame_atual):
     from login import abrir_login, versao
