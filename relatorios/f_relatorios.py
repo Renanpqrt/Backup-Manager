@@ -19,25 +19,11 @@ def coletar_data():
 
     return data, hora
 
-def relat_bkps(janela):
-    caminho = filedialog.asksaveasfilename(parent=janela, defaultextension='.pdf', filetypes=[('Arquivos Pdf', '*.pdf')], title='Salvar como')
-    dados = [conta for conta in session.query(Conta).all()]
-
-    if not caminho:
-        return
-    
-    dados_tabela = [["NOME", "EMAIL"]]
-    for conta in dados:
-        dados_tabela.append([conta.nome.upper(), conta.email.upper()])
-
-    # Coletar data e hora
-    data, hora = coletar_data()
-
-    # Parametros do relatório
-    relatorio = SimpleDocTemplate(caminho, pagesize=A4, topMargin=30, bottomMargin=30)
+def cabeçalho_padrao():
     elementos = []
+    data, hora = coletar_data()
     estilo = getSampleStyleSheet()
-
+    
     # PLR
     plr = Paragraph("PLR MANAGER", estilo['Heading3'].clone('h3_esquerda'))
     elementos.append(plr)
@@ -54,6 +40,26 @@ def relat_bkps(janela):
     elementos.append(hora_pdf)
     
     elementos.append(Spacer(1, 20))
+
+    return elementos
+
+def relat_bkps(janela):
+    caminho = filedialog.asksaveasfilename(parent=janela, defaultextension='.pdf', filetypes=[('Arquivos Pdf', '*.pdf')], title='Salvar como')
+    dados = [conta for conta in session.query(Conta).all()]
+
+    if not caminho:
+        return
+    
+    dados_tabela = [["NOME", "EMAIL"]]
+    for conta in dados:
+        dados_tabela.append([conta.nome.upper(), conta.email.upper()])
+
+    # Parametros do relatório
+    relatorio = SimpleDocTemplate(caminho, pagesize=A4, topMargin=30, bottomMargin=30)
+    elementos = []
+    estilo = getSampleStyleSheet()
+
+    elementos.extend(cabeçalho_padrao())
 
     # Titulo
     titulo_pdf = Paragraph("Relatório de contas de backup", estilo["Title"])
@@ -95,33 +101,15 @@ def relat_dados(janela):
     for conta in dados:
         dados_tabela.append([conta.nome.upper(), conta.email.upper()])
 
-    # Coletar data e hora
-    data, hora = coletar_data()
-
     # Parametros do relatório
     relatorio = SimpleDocTemplate(caminho, pagesize=A4, topMargin=30, bottomMargin=30)
     elementos = []
     estilo = getSampleStyleSheet()
 
-    # PLR
-    plr = Paragraph("PLR MANAGER", estilo['Heading3'].clone('h3_esquerda'))
-    elementos.append(plr)
-
-    # Data
-    data_pdf = Paragraph(data, estilo["Heading3"].clone('h3_direita', alignment=TA_RIGHT))
-    elementos.append(data_pdf)
-
-    elementos.append(Spacer(1, 20))
-
-    # Hora
-
-    hora_pdf = Paragraph(f'Hora: {hora}', estilo["Heading3"].clone('normal_direita', alignment=TA_RIGHT))
-    elementos.append(hora_pdf)
-    
-    elementos.append(Spacer(1, 20))
+    elementos.extend(cabeçalho_padrao())
 
     # Titulo
-    titulo_pdf = Paragraph("Relatório de contas de backup", estilo["Title"])
+    titulo_pdf = Paragraph("Relatório de contas de dados", estilo["Title"])
     elementos.append(titulo_pdf)
 
     elementos.append(Spacer(1, 20))
@@ -161,30 +149,12 @@ def relat_bkps_data(janela):
         segundo_bkp = conta.segundo_backup if conta.segundo_backup else "--"
         dados_tabela.append([conta.nome.upper(), conta.email.upper(), conta.ultimo_bkp, segundo_bkp])
 
-    # Coletar data e hora
-    data, hora = coletar_data()
-
     # Parametros do relatório
     relatorio = SimpleDocTemplate(caminho, pagesize=A3, topMargin=30, bottomMargin=30)
     elementos = []
     estilo = getSampleStyleSheet()
 
-    # PLR
-    plr = Paragraph("PLR MANAGER", estilo['Heading3'].clone('h3_esquerda'))
-    elementos.append(plr)
-
-    # Data
-    data_pdf = Paragraph(data, estilo["Heading3"].clone('h3_direita', alignment=TA_RIGHT))
-    elementos.append(data_pdf)
-
-    elementos.append(Spacer(1, 20))
-
-    # Hora
-
-    hora_pdf = Paragraph(f'Hora: {hora}', estilo["Heading3"].clone('normal_direita', alignment=TA_RIGHT))
-    elementos.append(hora_pdf)
-    
-    elementos.append(Spacer(1, 20))
+    elementos.extend(cabeçalho_padrao())
 
     # Titulo
     titulo_pdf = Paragraph("Relatório de contas de backup por data", estilo["Title"])
@@ -246,30 +216,12 @@ def relat_dados_data(janela):
     for conta in dados:
         dados_tabela.append([conta.nome.upper(), conta.email.upper(), conta.ultimo_bkp])
 
-    # Coletar data e hora
-    data, hora = coletar_data()
-
     # Parametros do relatório
     relatorio = SimpleDocTemplate(caminho, pagesize=A4, topMargin=30, bottomMargin=30)
     elementos = []
     estilo = getSampleStyleSheet()
 
-    # PLR
-    plr = Paragraph("PLR MANAGER", estilo['Heading3'].clone('h3_esquerda'))
-    elementos.append(plr)
-
-    # Data
-    data_pdf = Paragraph(data, estilo["Heading3"].clone('h3_direita', alignment=TA_RIGHT))
-    elementos.append(data_pdf)
-
-    elementos.append(Spacer(1, 20))
-
-    # Hora
-
-    hora_pdf = Paragraph(f'Hora: {hora}', estilo["Heading3"].clone('normal_direita', alignment=TA_RIGHT))
-    elementos.append(hora_pdf)
-    
-    elementos.append(Spacer(1, 20))
+    elementos.extend(cabeçalho_padrao())
 
     # Titulo
     titulo_pdf = Paragraph("Relatório de contas de backup por data", estilo["Title"])
@@ -322,30 +274,12 @@ def relat_bkps_atrasados(janela):
         segundo_bkp = conta.segundo_backup if conta.segundo_backup else "--"
         dados_tabela.append([conta.nome.upper(), conta.email.upper(), conta.ultimo_bkp, segundo_bkp])
 
-    # Coletar data e hora
-    data, hora = coletar_data()
-
     # Parametros do relatório
     relatorio = SimpleDocTemplate(caminho, pagesize=A3, topMargin=30, bottomMargin=30)
     elementos = []
     estilo = getSampleStyleSheet()
 
-    # PLR
-    plr = Paragraph("PLR MANAGER", estilo['Heading3'].clone('h3_esquerda'))
-    elementos.append(plr)
-
-    # Data
-    data_pdf = Paragraph(data, estilo["Heading3"].clone('h3_direita', alignment=TA_RIGHT))
-    elementos.append(data_pdf)
-
-    elementos.append(Spacer(1, 20))
-
-    # Hora
-
-    hora_pdf = Paragraph(f'Hora: {hora}', estilo["Heading3"].clone('normal_direita', alignment=TA_RIGHT))
-    elementos.append(hora_pdf)
-    
-    elementos.append(Spacer(1, 20))
+    elementos.extend(cabeçalho_padrao())
 
     # Titulo
     titulo_pdf = Paragraph("Relatório de contas de backup atrasados", estilo["Title"])
@@ -387,31 +321,13 @@ def relat_dados_atrasados(janela):
     for conta in dados:
         dados_tabela.append([conta.nome.upper(), conta.email.upper(), conta.ultimo_bkp])
 
-    # Coletar data e hora
-    data, hora = coletar_data()
-
     # Parametros do relatório
     relatorio = SimpleDocTemplate(caminho, pagesize=A4, topMargin=30, bottomMargin=30)
     elementos = []
     estilo = getSampleStyleSheet()
 
-    # PLR
-    plr = Paragraph("PLR MANAGER", estilo['Heading3'].clone('h3_esquerda'))
-    elementos.append(plr)
-
-    # Data
-    data_pdf = Paragraph(data, estilo["Heading3"].clone('h3_direita', alignment=TA_RIGHT))
-    elementos.append(data_pdf)
-
-    elementos.append(Spacer(1, 20))
-
-    # Hora
-
-    hora_pdf = Paragraph(f'Hora: {hora}', estilo["Heading3"].clone('normal_direita', alignment=TA_RIGHT))
-    elementos.append(hora_pdf)
+    elementos.extend(cabeçalho_padrao())
     
-    elementos.append(Spacer(1, 20))
-
     # Titulo
     titulo_pdf = Paragraph("Relatório de contas dados atrasados", estilo["Title"])
     elementos.append(titulo_pdf)
