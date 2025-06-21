@@ -41,3 +41,8 @@ Crie relatórios detalhados das contas em formato PDF, com formatação personal
 - **SQLAlchemy** (ORM para gerenciamento do banco de dados)
 - **SQLite** (banco de dados local)
 
+<<<<<<< HEAD
+=======
+## 📂 Estrutura do Projeto (simplificada)
+
+>>>>>>> e6cc64be0bd8c072f9ffb88d1986d623189b10cf
