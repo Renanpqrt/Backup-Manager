@@ -176,4 +176,20 @@ def importar_ultima_alteracao():
     except Exception as e:
         CTkMessagebox(title="Erro", message=f"Falha ao importar: {e}", icon="cancel")
 
-    
+def msgbox(title, message, icon='info', option_1="OK", option_2=None, option_3=None):
+    return CTkMessagebox(
+        title=title,
+        message=message,
+        bg_color='#2B2B2B',
+        fg_color='#2B2B2B',
+        text_color='#EEEEEE',
+        border_color='#2B2B2B',
+        title_color='#EEEEEE',
+        button_color="#00B4D8",
+        button_hover_color='#0096C7',
+        header=True,
+        icon=icon,
+        option_1=option_1,
+        option_2=option_2,
+        option_3=option_3
+    )
