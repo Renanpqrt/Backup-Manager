@@ -105,16 +105,16 @@ def abrir_cadastro_contas(area_principal):
         voltar_cadastros.place(relx=0.98, rely=0.025, anchor='ne')
 
         # Cadastro de contas
-        entry_nome = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite o nome')
+        entry_nome = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite o nome', width=500)
         entry_nome.place(relx=0.5, rely=0.1, anchor='center')
 
-        entry_email = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite o email')
+        entry_email = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite o email', width=500)
         entry_email.place(relx=0.5, rely=0.23, anchor='center')
 
-        entry_ultimobkp = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Data do ultimo BKP')
+        entry_ultimobkp = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Data do ultimo BKP', width=500)
         entry_ultimobkp.place(relx=0.5, rely=0.37, anchor='center')
 
-        entry_segundobkp = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite segundo BKP')
+        entry_segundobkp = ctk.CTkEntry(tabela.tab('Contas'), placeholder_text='Digite segundo BKP', width=500)
         entry_segundobkp.place(relx=0.5, rely=0.52, anchor='center')
 
         def salvar():
@@ -140,16 +140,16 @@ def abrir_cadastro_contas(area_principal):
         b_salvar.place(relx=0.5, rely=0.67, anchor='center')
 
         # Cadastro de contas de dados
-        entry_nome_d = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite o nome')
+        entry_nome_d = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite o nome', width=500)
         entry_nome_d.place(relx=0.5, rely=0.1, anchor='center')
 
-        entry_email_d = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite o email')
+        entry_email_d = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite o email', width=500)
         entry_email_d.place(relx=0.5, rely=0.23, anchor='center')
 
-        entry_ultimobkp_d = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Data do ultimo BKP')
+        entry_ultimobkp_d = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Data do ultimo BKP', width=500)
         entry_ultimobkp_d.place(relx=0.5, rely=0.37, anchor='center')
 
-        entry_obs = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite a observação')
+        entry_obs = ctk.CTkEntry(tabela.tab('Contas de dados'), placeholder_text='Digite a observação', width=500)
         entry_obs.place(relx=0.5, rely=0.52, anchor='center')
         
         def salvar_dados():
@@ -221,8 +221,9 @@ def abrir_cadastro_contas(area_principal):
                 conta.nome = nome_novo
                 conta.email = email_novo 
                 session.commit()
-
+                
                 abrir_cadastro_contas(area_principal)
+                retorno = msgbox(title="ALTERAÇÃO", message="CONTA ALTERADA COM SUCESSO!", icon='check')
 
         b_salvar = ctk.CTkButton(area_principal, text='Salvar', fg_color="green", hover_color="green", command=lambda: salvar_alteraçao(area_principal))
         b_salvar.place(relx=0.5, rely=0.53, anchor='center')
