@@ -80,7 +80,7 @@ def abrir_cadastro_contas(area_principal):
         label_e.grid(row=i, column=2, padx=10, pady=5)
 
         var = ctk.BooleanVar()
-        selecionar = ctk.CTkCheckBox(frame_dados, variable=var, command=lambda v=var: on_checkbox_click(v, checkbox_vars_dados), hover_color='gray20', fg_color='gray20')
+        selecionar = ctk.CTkCheckBox(frame_dados, variable=var, command=lambda v=var: on_checkbox_click(v, checkbox_vars_dados), hover_color='gray20', fg_color='gray20', text='')
         selecionar.grid(row=i, column=0, padx=5, pady=5)
         checkbox_vars_dados.append(var)
         checkbox_widgets_dados.append(conta)

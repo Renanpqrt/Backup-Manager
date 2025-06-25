@@ -111,6 +111,56 @@ def exportar_para_excel(df, janela):
                 celula.fill = fill
                 celula.border = borda_preta
 
+def exportar_para_excel_dados(df, janela):
+    cores_status = {
+        'green': 'FF008000',
+        'yellow': 'FFFFFF00',
+        'red': 'FFFF0000'
+    }
+
+    borda_preta = Border(
+        left=Side(style='thin', color='000000'),
+        right=Side(style='thin', color='000000'),
+        top=Side(style='thin', color='000000'),
+        bottom=Side(style='thin', color='000000')
+    )
+
+    caminho = filedialog.asksaveasfilename(parent=janela, defaultextension=".xlsx",
+                                          filetypes=[("Arquivos Excel", "*.xlsx")],
+                                          title="Salvar como")
+
+    if caminho:
+        with pd.ExcelWriter(caminho, engine='openpyxl') as writer:
+            df.drop(columns=['Cor'], inplace=False).to_excel(writer, index=False, sheet_name='Backup')  # Não exporta coluna 'Cor'
+            planilha = writer.sheets['Backup']
+
+            tamanhos_colunas = {
+                'Nome': 40,
+                'Email': 45,
+                'Ultimo Backup': 35
+            }
+
+            for idx, col in enumerate(df.drop(columns=['Cor']).columns, 1):
+                col_letter = get_column_letter(idx)
+                largura = tamanhos_colunas.get(col, 20)
+                planilha.column_dimensions[col_letter].width = largura
+
+            num_linhas = df.shape[0] + 1  
+            num_colunas = df.shape[1] - 1  # menos a coluna 'Cor'
+
+            for row in range(1, num_linhas + 1):
+                for col in range(1, num_colunas + 1):
+                    celula = planilha.cell(row=row, column=col)
+                    celula.border = borda_preta
+
+            col_index = list(df.columns).index("Ultimo Backup") + 1
+
+            for i, cor_valor in enumerate(df['Cor'], start=2):  # começa da linha 2
+                cor_hex = cores_status.get(cor_valor, 'FFFFFFFF')  # branco se não tiver cor
+                celula = planilha.cell(row=i, column=col_index)
+                fill = PatternFill(start_color=cor_hex, end_color=cor_hex, fill_type='solid')
+                celula.fill = fill
+                celula.border = borda_preta
 
 def b_exportar(janela):
     df = coletar_dados()
@@ -136,7 +186,7 @@ def coletar_dados2():
 
 def b_exportar2(janela):
     df = coletar_dados2()
-    exportar_para_excel(df, janela)
+    exportar_para_excel_dados(df, janela)
 
 def importar_ultima_alteracao():
     # Abre o seletor de arquivos para escolher o Excel
