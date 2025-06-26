@@ -6,7 +6,6 @@ from cadastros.users import abrir_user
 from cadastros.contas import abrir_cadastro_contas
 
 def abrir_cadastros(area_principal):
-    from home import abrir_home
     limpar_area_principal(area_principal)
 
     titulo_cadastro = ctk.CTkLabel(area_principal, text='Cadastros', font=('Helvetica', 30, 'bold'), text_color="#EAEAEA", fg_color='#1E1E1E')

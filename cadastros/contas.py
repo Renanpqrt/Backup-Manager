@@ -10,6 +10,7 @@ senha_exclusão = 'admin123'
 def abrir_cadastro_contas(area_principal):
     from cadastros.cadastro import abrir_cadastros
     limpar_area_principal(area_principal)
+    
 
     titulo = ctk.CTkLabel(area_principal, text='Cadastros De Contas', font=('Helvetica', 30, "bold"), fg_color="#1E1E1E", text_color='#EAEAEA')
     titulo.place(relx=0.5, rely=0.05, anchor='center')
@@ -59,31 +60,35 @@ def abrir_cadastro_contas(area_principal):
             if var != clicked_var:
                 var.set(False)
 
-    for i, conta in enumerate(session.query(Conta).all()):
-        label_c = ctk.CTkLabel(frame_contas, text=conta.nome.capitalize(), text_color='#EAEAEA', font=('Helvetica', 15, 'bold'))
-        label_c.grid(row=i, column=1, padx=10, pady=5)
+    area_principal.update_idletasks()
 
-        label_e = ctk.CTkLabel(frame_contas, text=conta.email.capitalize(), text_color="#EAEAEA", font=('Helvetica', 15, 'bold'))
-        label_e.grid(row=i, column=2, padx=10, pady=5)
+    def carregar_contas():
 
-        var = ctk.BooleanVar()
-        selecionar = ctk.CTkCheckBox(frame_contas, variable=var, command=lambda v=var: on_checkbox_click(v, checkbox_vars_contas), hover_color='gray20', fg_color='gray20', text='')
-        selecionar.grid(row=i, column=0, padx=5, pady=5)
-        checkbox_vars_contas.append(var)
-        checkbox_widgets_contas.append(conta)
+        for i, conta in enumerate(session.query(Conta).all()):
+            label_c = ctk.CTkLabel(frame_contas, text=conta.nome.capitalize(), text_color='#EAEAEA', font=('Helvetica', 15, 'bold'))
+            label_c.grid(row=i, column=1, padx=10, pady=5)
 
-    for i, conta in enumerate(session.query(Conta_dados).all()):
-        label_c = ctk.CTkLabel(frame_dados, text=conta.nome.capitalize(), text_color='#EAEAEA', font=('Helvetica', 15, 'bold'))
-        label_c.grid(row=i, column=1, padx=10, pady=5)
+            label_e = ctk.CTkLabel(frame_contas, text=conta.email.capitalize(), text_color="#EAEAEA", font=('Helvetica', 15, 'bold'))
+            label_e.grid(row=i, column=2, padx=10, pady=5)
 
-        label_e = ctk.CTkLabel(frame_dados, text=conta.email.capitalize(), text_color="#EAEAEA", font=('Helvetica', 15, 'bold'))
-        label_e.grid(row=i, column=2, padx=10, pady=5)
+            var = ctk.BooleanVar()
+            selecionar = ctk.CTkCheckBox(frame_contas, variable=var, command=lambda v=var: on_checkbox_click(v, checkbox_vars_contas), hover_color='gray20', fg_color='gray20', text='')
+            selecionar.grid(row=i, column=0, padx=5, pady=5)
+            checkbox_vars_contas.append(var)
+            checkbox_widgets_contas.append(conta)
 
-        var = ctk.BooleanVar()
-        selecionar = ctk.CTkCheckBox(frame_dados, variable=var, command=lambda v=var: on_checkbox_click(v, checkbox_vars_dados), hover_color='gray20', fg_color='gray20', text='')
-        selecionar.grid(row=i, column=0, padx=5, pady=5)
-        checkbox_vars_dados.append(var)
-        checkbox_widgets_dados.append(conta)
+        for i, conta in enumerate(session.query(Conta_dados).all()):
+            label_c = ctk.CTkLabel(frame_dados, text=conta.nome.capitalize(), text_color='#EAEAEA', font=('Helvetica', 15, 'bold'))
+            label_c.grid(row=i, column=1, padx=10, pady=5)
+
+            label_e = ctk.CTkLabel(frame_dados, text=conta.email.capitalize(), text_color="#EAEAEA", font=('Helvetica', 15, 'bold'))
+            label_e.grid(row=i, column=2, padx=10, pady=5)
+
+            var = ctk.BooleanVar()
+            selecionar = ctk.CTkCheckBox(frame_dados, variable=var, command=lambda v=var: on_checkbox_click(v, checkbox_vars_dados), hover_color='gray20', fg_color='gray20', text='')
+            selecionar.grid(row=i, column=0, padx=5, pady=5)
+            checkbox_vars_dados.append(var)
+            checkbox_widgets_dados.append(conta)
 
     # Cadastros
     def cadastrar_conta(area_principal):
@@ -270,4 +275,6 @@ def abrir_cadastro_contas(area_principal):
 
         b_deletar = ctk.CTkButton(area_principal, text='Deletar', fg_color="red", hover_color="red", command=confirmar_delecao)
         b_deletar.place(relx=0.5, rely=0.43, anchor='center')
+
+    area_principal.after(10, carregar_contas)
 
