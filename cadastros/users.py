@@ -53,7 +53,7 @@ def abrir_user(area_principal):
     def criar_user(area_principal):
         limpar_area_principal(area_principal)
 
-        titulo_criar = ctk.CTkLabel(area_principal, text='Criação de usuários', font=('Arial', 30, 'bold'), text_color='#1b4332')
+        titulo_criar = ctk.CTkLabel(area_principal, text='Criação de usuários', font=('Arial', 30, 'bold'), text_color='#EAEAEA')
         titulo_criar.place(relx=0.5, rely=0.05, anchor='center')
 
         entry_user = ctk.CTkEntry(area_principal, placeholder_text='Digite o usuário', width=500)
@@ -95,7 +95,7 @@ def abrir_user(area_principal):
             limpar_area_principal(area_principal)
             user_selecionado = selecionado[0][1]
 
-            titulo_alterar = ctk.CTkLabel(area_principal, text='Alterar usuário', font=('Helvetica', 30, 'bold'), text_color='#1b4332')
+            titulo_alterar = ctk.CTkLabel(area_principal, text='Alterar usuário', font=('Helvetica', 30, 'bold'), text_color='#EAEAEA')
             titulo_alterar.place(relx=0.5, rely=0.05, anchor='center')
             
             voltar_cadastros = ctk.CTkButton(area_principal, image=voltar_imag, width=80, fg_color='#1E1E1E', hover_color='#A9A9A9', text='', command=lambda: abrir_user(area_principal), bg_color='#1E1E1E')
@@ -142,7 +142,7 @@ def abrir_user(area_principal):
         else:
             limpar_area_principal(area_principal)     
             user_selecionado = selecionado[0][1]
-            titulo_del = ctk.CTkLabel(area_principal, text='Deletar usuário do app', font=('Helvetica', 30, 'bold'), text_color='#1b4332')
+            titulo_del = ctk.CTkLabel(area_principal, text='Deletar usuário do app', font=('Helvetica', 30, 'bold'), text_color='#EAEAEA')
             titulo_del.place(relx=0.5, rely=0.05, anchor='center')
 
             # Mini cabeçalho
