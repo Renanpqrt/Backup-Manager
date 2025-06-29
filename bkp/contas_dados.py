@@ -98,14 +98,14 @@ def iniciar_backup_d(janela):
     export.place(relx=0.1, rely=0.05, anchor='center')
 
     importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: importar_ultima_alteracao())
-    importar.place(relx=0.75, rely=0.05)
+    importar.place(relx=0.75, rely=0.05, anchor='center')
 
     resetar_cor = ctk.CTkButton(bkp, text='Resetar cores', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=resetar_cores)
     resetar_cor.place(relx=0.25, rely=0.05, anchor='center')
     
     # Frame dos BKPs
     frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#1E1E1E')
-    frame_conta.place(relx=0.5, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
+    frame_conta.place(relx=0.55, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
 
     # Area dos BKPs
     for i, conta in enumerate(session.query(Conta_dados).all()):

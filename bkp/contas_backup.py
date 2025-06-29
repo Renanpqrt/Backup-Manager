@@ -153,7 +153,7 @@ def iniciar_backup(janela):
     export.place(relx=0.1, rely=0.05, anchor='center')
 
     importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: importar_ultima_alteracao())
-    importar.place(relx=0.75, rely=0.05)
+    importar.place(relx=0.75, rely=0.05, anchor='center')
 
     resetar_cor = ctk.CTkButton(bkp, text='Resetar cores', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=resetar_cores)
     resetar_cor.place(relx=0.3, rely=0.05, anchor='center')

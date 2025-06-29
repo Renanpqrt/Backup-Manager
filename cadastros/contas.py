@@ -276,5 +276,5 @@ def abrir_cadastro_contas(area_principal):
         b_deletar = ctk.CTkButton(area_principal, text='Deletar', fg_color="red", hover_color="red", command=confirmar_delecao)
         b_deletar.place(relx=0.5, rely=0.43, anchor='center')
 
-    area_principal.after(10, carregar_contas)
+    area_principal.after(100, carregar_contas)
 
