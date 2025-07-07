@@ -31,12 +31,13 @@ class Conta(Base):
     cor_ultimo_backup = Column(String)
     cor_segundo_backup = Column(String)
 
-    def __init__(self, nome, email, ultimo_bkp="00/00/00", segundo_backup="S/segundobkp", cor_ultimo_backup="gray20"):
+    def __init__(self, nome, email, ultimo_bkp="00/00/00", segundo_backup="S/segundobkp", cor_ultimo_backup="white", cor_segundo_backup=''):
         self.nome = nome
         self.email = email
         self.ultimo_bkp = ultimo_bkp
         self.segundo_backup = segundo_backup
         self.cor_ultimo_backup = cor_ultimo_backup
+        self.cor_segundo_backup = cor_segundo_backup
 
 class User(Base):
     __tablename__ = "users"
