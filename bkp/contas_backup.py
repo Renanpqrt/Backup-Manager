@@ -153,7 +153,7 @@ def iniciar_backup(janela):
     export.place(relx=0.1, rely=0.05, anchor='center')
 
     importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: importar_ultima_alteracao())
-    importar.place(relx=0.75, rely=0.05, anchor='center')
+    importar.place(relx=0.8, rely=0.05, anchor='center')
 
     resetar_cor = ctk.CTkButton(bkp, text='Resetar cores', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=resetar_cores)
     resetar_cor.place(relx=0.3, rely=0.05, anchor='center')
@@ -176,6 +176,12 @@ def iniciar_backup(janela):
         entry_ultimobkp.insert(0, conta.ultimo_bkp)
         entry_ultimobkp.grid(row=i, column=2, padx=10, pady=5)
         entry_ultimobkp.bind('<Return>', lambda event, e=entry_ultimobkp, id=conta.id: salvar_ultimo_bkp(e, id))
+        # Bind verde -- F1
+        entry_ultimobkp.bind('<F1>', lambda event, e=entry_ultimobkp, id=conta.id: verde(e, id, tipo="Primeiro"))
+        # Bind amarelo -- F2
+        entry_ultimobkp.bind('<F2>', lambda event, e=entry_ultimobkp, id=conta.id: amarelo(e, id, tipo="Primeiro"))
+        # Bind vermelho -- F3
+        entry_ultimobkp.bind('<F3>', lambda event, e=entry_ultimobkp, id=conta.id: vermelho(e, id, tipo="Primeiro"))
         entry_ultimos_bkp[conta.id] = entry_ultimobkp  
         
         if len(conta.segundo_backup) > 0:
@@ -183,9 +189,12 @@ def iniciar_backup(janela):
             entry_segundobkp.insert(0, conta.segundo_backup)
             entry_segundobkp.grid(row=i, column=3, padx=10, pady=5)
             entry_segundobkp.bind('<Return>', lambda event, e=entry_segundobkp, id=conta.id: salvar_segundo_backup(e, id))
-            entry_segundobkp.bind('<Up>', lambda event, e=entry_segundobkp, id=conta.id: verde(e, id, tipo="Segundo"))
-            entry_segundobkp.bind('<Down>', lambda event, e=entry_segundobkp, id=conta.id: vermelho(e, id, tipo="Segundo"))
-            entry_segundobkp.bind('<Right>', lambda event, e=entry_segundobkp, id=conta.id: amarelo(e, id, tipo="Segundo"))
+            # Bind verde -- F1
+            entry_segundobkp.bind('<F1>', lambda event, e=entry_segundobkp, id=conta.id: verde(e, id, tipo="Segundo"))
+            # Bind amarelo -- F2
+            entry_segundobkp.bind('<F2>', lambda event, e=entry_segundobkp, id=conta.id: amarelo(e, id, tipo="Segundo"))
+            # Bind vermelho -- F3
+            entry_segundobkp.bind('<F3>', lambda event, e=entry_segundobkp, id=conta.id: vermelho(e, id, tipo="Segundo"))
             entry_segundos_bkp[conta.id] = entry_segundobkp
 
 
@@ -198,14 +207,9 @@ def iniciar_backup(janela):
         b_verde = ctk.CTkButton(frame_conta, text='✔', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: verde(e, id, tipo="Primeiro"))
         b_verde.grid(row=i, column=8, padx=10, pady=5)
 
-        b_amarelo = ctk.CTkButton(frame_conta, text='➖', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: amarelo(e, id, tipo="Primeiro"))
-        b_amarelo.grid(row=i, column=9, padx=5, pady=5)
-
-        b_vermelho = ctk.CTkButton(frame_conta, text='X', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: vermelho(e, id, tipo="Primeiro"))
-        b_vermelho.grid(row=i, column=10, padx=5, pady=5)
-
         b_1_neg = ctk.CTkButton(frame_conta, text='-1D', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: diminuir_um_dia(e, id))
-        b_1_neg.grid(row=i, column=7, padx=5, pady=5)
+        b_1_neg.grid(row=i, column=6, padx=5, pady=5)
 
         b_1_pos = ctk.CTkButton(frame_conta, text='+1D', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: aumentar_um_dia(e, id))
-        b_1_pos.grid(row=i, column=6, padx=5, pady=5)
+        b_1_pos.grid(row=i, column=7, padx=5, pady=5)
+    
