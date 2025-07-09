@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from dados.tabelas import Conta, session
-from util import b_exportar, importar_ultima_alteracao
+from util import importar_ultima_alteracao
 from datetime import date, timedelta, datetime
 from sqlalchemy import and_
 
@@ -148,9 +148,6 @@ def iniciar_backup(janela):
     # Labels e Buttons
     texto = ctk.CTkLabel(bkp, text='Backups', text_color='#EAEAEA', font=('Helvetica', 30, 'bold'))
     texto.place(relx=0.5, rely=0.05, anchor='center')
-
-    export = ctk.CTkButton(bkp, text='Exportar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: b_exportar(janela))
-    export.place(relx=0.1, rely=0.05, anchor='center')
 
     importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: importar_ultima_alteracao())
     importar.place(relx=0.8, rely=0.05, anchor='center')

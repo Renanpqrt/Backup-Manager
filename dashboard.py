@@ -11,6 +11,7 @@ def dashboard(area_principal):
     usuarios = len([usuario.nome_user for usuario in session.query(User).all()])
     contas_dados = len([conta.nome for conta in session.query(Conta_dados).all()])
     contas = len([conta.nome for conta in session.query(Conta).all()])
+    contas_sem_cor = len([conta.nome for conta in session.query(Conta).filter(~Conta.cor_ultimo_backup.in_(['red', 'yellow', 'green']))])
 
     
     # header
@@ -91,3 +92,14 @@ def dashboard(area_principal):
 
     label_value6 = ctk.CTkLabel(card6, text=(f'{label_porcentagem:.1f}%'), font=ctk.CTkFont(size=30, weight="bold"), text_color=('green' if int(label_porcentagem) > 0 else 'white'))
     label_value6.pack(padx=20, pady=(0, 20))
+
+    # Card 7
+
+    card7 = ctk.CTkFrame(card_frame, fg_color="#00B4D8", corner_radius=12)
+    card7.grid(row=2, column=0, padx=20, pady=15, sticky="nsew")
+
+    label_title7 = ctk.CTkLabel(card7, text='Contas sem status', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
+    label_title7.pack(padx=20, pady=(20, 5))
+
+    label_value7 = ctk.CTkLabel(card7, text=contas_sem_cor, font=ctk.CTkFont(size=30, weight="bold"), text_color='white')
+    label_value7.pack(padx=20, pady=(0, 20))

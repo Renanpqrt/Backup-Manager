@@ -61,7 +61,7 @@ class Conta_dados(Base):
     cor_ultimo_backup = Column(String)
     
 
-    def __init__(self, nome, email, ultimo_bkp="00/00/00", obs="S/obs", cor_ultimo_backup="gray20"):
+    def __init__(self, nome, email, ultimo_bkp="00/00/00", obs="S/obs", cor_ultimo_backup="white"):
         self.nome = nome
         self.email = email
         self.ultimo_bkp = ultimo_bkp

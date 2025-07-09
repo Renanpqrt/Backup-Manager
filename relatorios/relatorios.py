@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from util import limpar_area_principal
+from util import limpar_area_principal, b_exportar, b_exportar2
 from relatorios.f_relatorios import relat_bkps, relat_bkps_data, relat_bkps_atrasados, relat_dados, relat_dados_data, relat_dados_atrasados
 
 def abrir_relatorios(janela, area_principal):
@@ -38,6 +38,12 @@ def abrir_relatorios(janela, area_principal):
             rel_contas_atrasados = ctk.CTkButton(menu_lateral_bkp, text='Contas BKPs - Atrasados', fg_color="#00B4D8", hover_color='#0096C7', width=175, command=lambda: relat_bkps_atrasados(janela), text_color='#EAEAEA', corner_radius=10)
             rel_contas_atrasados.place(relx=0.01, rely=0.36)
 
+            texto_excel = ctk.CTkLabel(menu_lateral_bkp, text='Excel', text_color='gray')
+            texto_excel.place(relx=0.45, rely=0.45, anchor='center')
+
+            exportar_excel_contas = ctk.CTkButton(menu_lateral_bkp, text='Exportar em excel', fg_color="#00B4D8", hover_color='#0096C7', width=175, command=lambda: b_exportar(janela), text_color='#EAEAEA', corner_radius=10)
+            exportar_excel_contas.place(relx=0.01, rely=0.5)
+
             fechar_btn = ctk.CTkButton(menu_lateral_bkp, text='Fechar', fg_color='red', hover_color='red', width=60 ,command=lambda: fechar_menu(menu=menu_lateral_bkp))
             fechar_btn.place(relx=0.01, rely=0.95)
             
@@ -53,6 +59,12 @@ def abrir_relatorios(janela, area_principal):
 
             rel_dados_atrasados = ctk.CTkButton(menu_lateral_bkp, text='Contas Dados - Atrasados', fg_color="#00B4D8", hover_color='#0096C7', width=175, command=lambda: relat_dados_atrasados(janela), text_color='#EAEAEA', corner_radius=10)
             rel_dados_atrasados.place(relx=0.01, rely=0.36)
+
+            texto_excel = ctk.CTkLabel(menu_lateral_bkp, text='Excel', text_color='gray')
+            texto_excel.place(relx=0.45, rely=0.45, anchor='center')
+
+            exportar_excel_dados = ctk.CTkButton(menu_lateral_bkp, text='Exportar em excel', fg_color="#00B4D8", hover_color='#0096C7', width=175, command=lambda: b_exportar2(janela), text_color='#EAEAEA', corner_radius=10)
+            exportar_excel_dados.place(relx=0.01, rely=0.5)
 
             fechar_btn = ctk.CTkButton(menu_lateral_bkp, text='Fechar', fg_color='red', hover_color='red', width=60,command=lambda: fechar_menu(menu=menu_lateral_bkp))
             fechar_btn.place(relx=0.01, rely=0.95)

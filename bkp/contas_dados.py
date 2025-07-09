@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from dados.tabelas import Conta_dados, session
-from util import limpar_area_principal, b_exportar2, importar_ultima_alteracao
+from util import limpar_area_principal, importar_ultima_alteracao
 from datetime import date, timedelta, datetime
 
 # Toplevel dos backups
@@ -91,11 +91,8 @@ def iniciar_backup_d(janela):
         label.update()
 
     # Labels e Buttons
-    texto = ctk.CTkLabel(bkp, text='Iniciando Backups (Dados)', text_color='#EAEAEA', font=('Helvetica', 30, 'bold'))
+    texto = ctk.CTkLabel(bkp, text='Backups (Dados)', text_color='#EAEAEA', font=('Helvetica', 30, 'bold'))
     texto.place(relx=0.5, rely=0.05, anchor='center')
-
-    export = ctk.CTkButton(bkp, text='Exportar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: b_exportar2(janela))
-    export.place(relx=0.1, rely=0.05, anchor='center')
 
     importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: importar_ultima_alteracao())
     importar.place(relx=0.75, rely=0.05, anchor='center')
