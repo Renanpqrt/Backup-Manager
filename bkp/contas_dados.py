@@ -1,7 +1,10 @@
 import customtkinter as ctk
 from dados.tabelas import Conta_dados, session
-from util import limpar_area_principal, importar_ultima_alteracao
+from util import limpar_area_principal, importar_ultima_alteracao, resource_path, msgbox
 from datetime import date, timedelta, datetime
+from PIL import Image
+from customtkinter import CTkImage
+from bkp.contas_backup import atalhos_str
 
 # Toplevel dos backups
 def iniciar_backup_d(janela):
@@ -94,12 +97,24 @@ def iniciar_backup_d(janela):
     texto = ctk.CTkLabel(bkp, text='Backups (Dados)', text_color='#EAEAEA', font=('Helvetica', 30, 'bold'))
     texto.place(relx=0.5, rely=0.05, anchor='center')
 
-    importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: importar_ultima_alteracao())
-    importar.place(relx=0.75, rely=0.05, anchor='center')
+    importar_img = Image.open(resource_path("imagens/importar.png"))
+    importar_img = CTkImage(light_image=importar_img, size=(25, 25))
 
-    resetar_cor = ctk.CTkButton(bkp, text='Resetar cores', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=resetar_cores)
-    resetar_cor.place(relx=0.25, rely=0.05, anchor='center')
+    importar = ctk.CTkButton(bkp, text='', image=importar_img, width=60, fg_color='#1E1E1E', hover_color='#A9A9A9', command=lambda: importar_ultima_alteracao())
+    importar.place(relx=0.65, rely=0.05, anchor='center')
+
+    resetar_img = Image.open(resource_path("imagens/resetar.png"))
+    resetar_img = CTkImage(light_image=resetar_img, size=(25, 25))
+
+    resetar_cor = ctk.CTkButton(bkp, image=resetar_img, text='', width=60, fg_color='#1E1E1E', hover_color="#A9A9A9", command=resetar_cores, bg_color='#1E1E1E')
+    resetar_cor.place(relx=0.35, rely=0.05, anchor='center')
     
+    atalhos_img = Image.open(resource_path("imagens/ajuda.png"))
+    atalhos_img = CTkImage(light_image=atalhos_img, size=(25, 25))
+
+    atalhos = ctk.CTkButton(bkp, text='', image=atalhos_img, width=60, fg_color='#1E1E1E', hover_color="#A9A9A9", command=lambda title="Ajuda", message=atalhos_str: msgbox(title, message), bg_color='#1E1E1E')
+    atalhos.place(relx=0.07, rely=0.05, anchor='center')
+
     # Frame dos BKPs
     frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#1E1E1E')
     frame_conta.place(relx=0.55, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
@@ -117,6 +132,13 @@ def iniciar_backup_d(janela):
         entry_ultimobkp.insert(0, conta.ultimo_bkp)
         entry_ultimobkp.grid(row=i, column=2, padx=10, pady=5)
         entry_ultimobkp.bind('<Return>', lambda event, e=entry_ultimobkp, id=conta.id: salvar_ultimobkp(e, id))
+        # Bind verde -- F1
+        entry_ultimobkp.bind('<F1>', lambda event, e=entry_ultimobkp, id=conta.id: verde(e, id))
+        # Bind amarelo -- F2
+        entry_ultimobkp.bind('<F2>', lambda event, e=entry_ultimobkp, id=conta.id: amarelo(e, id))
+        # Bind vermelho -- F3
+        entry_ultimobkp.bind('<F3>', lambda event, e=entry_ultimobkp, id=conta.id: vermelho(e, id))
+        
         entry_ultimos_bkp[conta.id] = entry_ultimobkp 
 
         entry_obs = ctk.CTkEntry(frame_conta, width=100, fg_color='#EAEAEA', text_color='black')
@@ -133,9 +155,4 @@ def iniciar_backup_d(janela):
         b_verde = ctk.CTkButton(frame_conta, text='✔', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: verde(e, id))
         b_verde.grid(row=i, column=6, padx=10, pady=5)
 
-        b_amarelo = ctk.CTkButton(frame_conta, text='➖', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: amarelo(e, id))
-        b_amarelo.grid(row=i, column=7, padx=5, pady=5)
-
-        b_vermelho = ctk.CTkButton(frame_conta, text='X', width=60, fg_color='#00B4D8', hover_color='#0096C7', command=lambda e=entry_ultimobkp, id=conta.id: vermelho(e, id))
-        b_vermelho.grid(row=i, column=8, padx=5, pady=5)
 

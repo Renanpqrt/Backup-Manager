@@ -1,8 +1,13 @@
 import customtkinter as ctk
 from dados.tabelas import Conta, session
-from util import importar_ultima_alteracao
+from util import importar_ultima_alteracao, resource_path, msgbox
 from datetime import date, timedelta, datetime
 from sqlalchemy import and_
+from PIL import Image
+from customtkinter import CTkImage
+
+
+atalhos_str = "ATALHOS:\n\nF1 --> VERDE\nF2 --> AMARELO\nF3 --> VERMELHO\nENTER --> SALVAR ESCRITA"
 
 # Toplevel dos backups
 def iniciar_backup(janela):
@@ -149,11 +154,23 @@ def iniciar_backup(janela):
     texto = ctk.CTkLabel(bkp, text='Backups', text_color='#EAEAEA', font=('Helvetica', 30, 'bold'))
     texto.place(relx=0.5, rely=0.05, anchor='center')
 
-    importar = ctk.CTkButton(bkp, text='Importar dados', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=lambda: importar_ultima_alteracao())
-    importar.place(relx=0.8, rely=0.05, anchor='center')
+    importar_img = Image.open(resource_path("imagens/importar.png"))
+    importar_img = CTkImage(light_image=importar_img, size=(25, 25))
 
-    resetar_cor = ctk.CTkButton(bkp, text='Resetar cores', width=80, fg_color='#00B4D8', hover_color='#0096C7', command=resetar_cores)
-    resetar_cor.place(relx=0.3, rely=0.05, anchor='center')
+    importar = ctk.CTkButton(bkp, text='', image=importar_img, width=60, fg_color='#1E1E1E', hover_color='#A9A9A9', command=lambda: importar_ultima_alteracao())
+    importar.place(relx=0.65, rely=0.05, anchor='center')
+
+    resetar_img = Image.open(resource_path("imagens/resetar.png"))
+    resetar_img = CTkImage(light_image=resetar_img, size=(25, 25))
+
+    resetar_cor = ctk.CTkButton(bkp, image=resetar_img, text='', width=60, fg_color='#1E1E1E', hover_color="#A9A9A9", command=resetar_cores, bg_color='#1E1E1E')
+    resetar_cor.place(relx=0.35, rely=0.05, anchor='center')
+
+    atalhos_img = Image.open(resource_path("imagens/ajuda.png"))
+    atalhos_img = CTkImage(light_image=atalhos_img, size=(25, 25))
+
+    atalhos = ctk.CTkButton(bkp, text='', image=atalhos_img, width=60, fg_color='#1E1E1E', hover_color="#A9A9A9", command=lambda title="Ajuda", message=atalhos_str: msgbox(title, message), bg_color='#1E1E1E')
+    atalhos.place(relx=0.07, rely=0.05, anchor='center')
 
     # Frame dos BKPs
     frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#1E1E1E')
