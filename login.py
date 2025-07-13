@@ -5,7 +5,7 @@ from home import abrir_home
 from util import limpar_tela
 from datetime import date, datetime
 import locale
-versao = '1.1.5'
+versao = '1.1.6'
 
 def abrir_login(janela, frame_atual):
     limpar_tela(frame_atual)
