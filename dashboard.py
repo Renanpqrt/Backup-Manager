@@ -5,15 +5,25 @@ from dados.tabelas import Conta_dados, Conta, User, session
 def dashboard(area_principal):
     limpar_area_principal(area_principal)
 
-    # Variaveis para os cards
-    contas_atrasadas = len([conta.nome for conta in session.query(Conta).filter(Conta.cor_ultimo_backup.in_(['red', 'yellow']))])
-    dados_atrasados = len([conta.nome for conta in session.query(Conta_dados).filter(Conta_dados.cor_ultimo_backup.in_(['red', 'yellow']))])
-    usuarios = len([usuario.nome_user for usuario in session.query(User).all()])
-    contas_dados = len([conta.nome for conta in session.query(Conta_dados).all()])
-    contas = len([conta.nome for conta in session.query(Conta).all()])
-    contas_sem_cor = len([conta.nome for conta in session.query(Conta).filter(~Conta.cor_ultimo_backup.in_(['red', 'yellow', 'green']))])
+    # Consulta no banco de dados
+    contas = [conta for conta in session.query(Conta).all()]
+    contas_dados = [conta for conta in session.query(Conta_dados).all()]
+    usuarios = [usuario for usuario in session.query(User).all()]
 
+    # Variaveis para os cards
+    contas_atrasadas = len([conta for conta in contas if conta.cor_ultimo_backup in ('red', 'yellow') or conta.cor_segundo_backup in ('red', 'yellow')])
+
+    dados_atrasados = len([conta for conta in contas_dados if conta.cor_ultimo_backup in ('red', 'yellow')])
     
+    contas_sem_cor = len([conta for conta in contas if conta.cor_ultimo_backup not in ('red', 'yellow', 'green') or conta.cor_segundo_backup not in ('red', 'yellow', 'green', '')])
+
+    contas_em_dia = [conta for conta in contas if conta.cor_ultimo_backup == 'green' and conta.cor_segundo_backup in ('green', '')]
+    
+    try:
+        label_porcentagem = (len(contas_em_dia) / len(contas)) * 100
+    except ZeroDivisionError:
+        label_porcentagem = 0
+
     # header
     header = ctk.CTkLabel(area_principal, text="Dashboard", font=ctk.CTkFont(size=30, weight="bold"), text_color="#EAEAEA")
     header.pack(pady=20)
@@ -28,7 +38,7 @@ def dashboard(area_principal):
     label_title1 = ctk.CTkLabel(card1, text='Contas Backup', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title1.pack(padx=20, pady=(20, 5))
 
-    label_value1 = ctk.CTkLabel(card1, text=contas, font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value1 = ctk.CTkLabel(card1, text=len(contas), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
     label_value1.pack(padx=20, pady=(0, 20))
 
 
@@ -39,7 +49,7 @@ def dashboard(area_principal):
     label_title2 = ctk.CTkLabel(card2, text='Contas Dados', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title2.pack(padx=20, pady=(20, 5))
 
-    label_value2 = ctk.CTkLabel(card2, text=contas_dados, font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value2 = ctk.CTkLabel(card2, text=len(contas_dados), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
     label_value2.pack(padx=20, pady=(0, 20))
 
 
@@ -50,7 +60,7 @@ def dashboard(area_principal):
     label_title3 = ctk.CTkLabel(card3, text='Usuários', font=ctk.CTkFont(size=16, weight="bold"), text_color="white")
     label_title3.pack(padx=20, pady=(20, 5))
 
-    label_value3 = ctk.CTkLabel(card3, text=usuarios, font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
+    label_value3 = ctk.CTkLabel(card3, text=len(usuarios), font=ctk.CTkFont(size=30, weight="bold"), text_color="white")
     label_value3.pack(padx=20, pady=(0, 20))
 
     # Card 4
@@ -76,14 +86,7 @@ def dashboard(area_principal):
     card_frame.grid_columnconfigure((0, 1, 2), weight=1)
 
     # Card 6
-    contas_em_dia = [conta for conta in session.query(Conta).all() if conta.cor_ultimo_backup == 'green' and conta.cor_segundo_backup in ['green', '']]
-
-    total_de_contas = [conta for conta in session.query(Conta).all()]
-    try:
-        label_porcentagem = (len(contas_em_dia) / len(total_de_contas)) * 100
-    except ZeroDivisionError:
-        label_porcentagem = 0
-
+    
     card6 = ctk.CTkFrame(card_frame, fg_color="#00B4D8", corner_radius=12)
     card6.grid(row=1, column=2, padx=20, pady=30, sticky="nsew")
 
