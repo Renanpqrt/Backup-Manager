@@ -19,6 +19,11 @@ def coletar_data():
 
     return data, hora
 
+# Consultas
+
+contas_backup = [conta for conta in session.query(Conta).all()]
+contas_dados = [conta for conta in session.query(Conta_dados).all()]
+
 def cabeçalho_padrao():
     elementos = []
     data, hora = coletar_data()
@@ -45,7 +50,7 @@ def cabeçalho_padrao():
 
 def relat_bkps(janela):
     caminho = filedialog.asksaveasfilename(parent=janela, defaultextension='.pdf', filetypes=[('Arquivos Pdf', '*.pdf')], title='Salvar como')
-    dados = [conta for conta in session.query(Conta).all()]
+    dados = [conta for conta in contas_backup]
 
     if not caminho:
         return
@@ -92,7 +97,7 @@ def relat_bkps(janela):
 
 def relat_dados(janela):
     caminho = filedialog.asksaveasfilename(parent=janela, defaultextension='.pdf', filetypes=[('Arquivos Pdf', '*.pdf')], title='Salvar como')
-    dados = [conta for conta in session.query(Conta_dados).all()]
+    dados = [conta for conta in contas_dados]
 
     if not caminho:
         return
@@ -139,7 +144,7 @@ def relat_dados(janela):
 
 def relat_bkps_data(janela):
     caminho = filedialog.asksaveasfilename(parent=janela, defaultextension='.pdf', filetypes=[('Arquivos Pdf', '*.pdf')], title='Salvar como')
-    dados = [conta for conta in session.query(Conta).all()]
+    dados = [conta for conta in contas_backup]
 
     if not caminho:
         return
@@ -207,7 +212,7 @@ def relat_bkps_data(janela):
 
 def relat_dados_data(janela):
     caminho = filedialog.asksaveasfilename(parent=janela, defaultextension='.pdf', filetypes=[('Arquivos Pdf', '*.pdf')], title='Salvar como')
-    dados = [conta for conta in session.query(Conta_dados).all()]
+    dados = [conta for conta in contas_dados]
 
     if not caminho:
         return
@@ -233,7 +238,7 @@ def relat_dados_data(janela):
     dados_tabela.append(["Totais:", f"Contas >> {len(dados)}"])
 
     # Criação da tabela
-    tabela = Table(dados_tabela, colWidths=[175, 290, 130])
+    tabela = Table(dados_tabela, colWidths=[175, 285, 130])
     estilos = TableStyle([("ALIGN", (0, 0), (-1, -1), "LEFT"),
                                 ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
                                 ('FONTSIZE', (0, 0), (-1, -1), 10),
@@ -264,7 +269,7 @@ def relat_dados_data(janela):
 
 def relat_bkps_atrasados(janela):
     caminho = filedialog.asksaveasfilename(parent=janela, defaultextension='.pdf', filetypes=[('arquivos pdf', '*.pdf')], title='salvar como')
-    dados = [conta for conta in session.query(Conta).all() if conta.cor_ultimo_backup in ['red', 'yellow'] and conta.cor_segundo_backup in ['red', 'yellow', '']]
+    dados = [conta for conta in contas_backup if conta.cor_ultimo_backup in ['red', 'yellow'] or conta.cor_segundo_backup in ['red', 'yellow']]
 
     if not caminho:
         return
@@ -312,7 +317,7 @@ def relat_bkps_atrasados(janela):
 
 def relat_dados_atrasados(janela):
     caminho = filedialog.asksaveasfilename(parent=janela, defaultextension='.pdf', filetypes=[('arquivos pdf', '*.pdf')], title='salvar como')
-    dados = [conta for conta in session.query(Conta_dados).all() if conta.cor_ultimo_backup in ['red', 'yellow']]
+    dados = [conta for conta in contas_dados if conta.cor_ultimo_backup in ['red', 'yellow']]
 
     if not caminho:
         return
