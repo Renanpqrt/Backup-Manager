@@ -119,8 +119,14 @@ def iniciar_backup_d(janela):
     frame_conta = ctk.CTkScrollableFrame(bkp, fg_color='#1E1E1E')
     frame_conta.place(relx=0.55, rely=0.55, anchor='center', relwidth=1, relheight=0.90)
 
+    # Generator function para carregar as contas
+    def contas_stream():
+        for conta in session.query(Conta_dados).yield_per(50):
+            yield conta
+
+    
     # Area dos BKPs
-    for i, conta in enumerate(session.query(Conta_dados).all()):
+    for i, conta in enumerate(contas_stream()):
         label_nome = ctk.CTkLabel(frame_conta, text=conta.nome.capitalize(), text_color='gray', font=('Helvetica', 17, 'bold'))
         label_nome.grid(row=i, column=0, padx=5, pady=5)
 
